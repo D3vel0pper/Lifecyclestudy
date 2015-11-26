@@ -31,7 +31,7 @@ import t4ka.com.lifecyclestudy.adapter.*;
 import t4ka.com.lifecyclestudy.commons.*;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnClickListener{
 
     private Context context = this;
     private String TABLE_NAME = "user";
@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
 
 
         //Create Btn
-        createBtn.setOnClickListener((View.OnClickListener)this);
+        createBtn.setOnClickListener(this);
        /*
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
         */
 
         //CreateTable Btn
-        createtableBtn.setOnClickListener((View.OnClickListener)this);
+        createtableBtn.setOnClickListener(this);
         /*
         createtableBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -127,7 +127,7 @@ public class MainActivity extends Activity {
 */
 
         //Delete Btn
-        deletetableBtn.setOnClickListener((View.OnClickListener)this);
+        deletetableBtn.setOnClickListener(this);
 /*
         deletetableBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -173,7 +173,7 @@ public class MainActivity extends Activity {
         final String name = nametext.getText().toString();
         final String comment = commenttext.getText().toString();
 
-        insertBtn.setOnClickListener((View.OnClickListener)this);
+        insertBtn.setOnClickListener(this);
 
 /*
         //insertBtn
@@ -218,7 +218,7 @@ public class MainActivity extends Activity {
 */
 
         //updateBtn
-        updateBtn.setOnClickListener((View.OnClickListener)this);
+        updateBtn.setOnClickListener(this);
 /*        updateBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -257,7 +257,7 @@ public class MainActivity extends Activity {
         });
 */
         //deldataBtn
-        deldataBtn.setOnClickListener((View.OnClickListener)this);
+        deldataBtn.setOnClickListener(this);
 /*
         deldataBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -312,7 +312,7 @@ public class MainActivity extends Activity {
          * */
 
           //showBtn
-        showBtn.setOnClickListener((View.OnClickListener)this);
+        showBtn.setOnClickListener(this);
 /*        showBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -421,30 +421,31 @@ public class MainActivity extends Activity {
         Toast.makeText(this,"onDestroy called",Toast.LENGTH_SHORT).show();
     }
 
+    @Override
     public void onClick(View v){
         SQLProcesser mPsql = new SQLProcesser();
 
-        if(v == showBtn){
+        if(v.getId() == R.id.showBtn){
             //mPsql.Process(DB_NAME,"show",context);
-        } else if(v == createBtn){
+        } else if(v.getId() == R.id.createBtn){
             mPsql.setType("create");
             //mPsql.Process(DB_NAME,"create",context);
-        } else if(v == deletetableBtn){
+        } else if(v.getId() == R.id.deletetableBtn){
             mPsql.setType("deletetable");
             //mPsql.Process(DB_NAME,"deletetable",context);
-        } else if(v == createtableBtn){
+        } else if(v.getId() == R.id.createtableBtn){
             mPsql.setType("createtable");
             //mPsql.Process(DB_NAME,"createtable",context);
-        } else if(v == insertBtn){
+        } else if(v.getId() == R.id.insertBtn){
             mPsql.setType("insert");
             mPsql.setName(nametext.getText().toString());
             //mPsql.Process(DB_NAME,"insert",context);
-        } else if(v == updateBtn){
+        } else if(v.getId() == R.id.updateBtn){
             mPsql.setName(nametext.getText().toString());
             mPsql.setName(commenttext.getText().toString());
             mPsql.setId(idtext.getText().toString());
             //mPsql.Process(DB_NAME,"update",context);
-        } else if(v == deldataBtn){
+        } else if(v.getId() == R.id.deldataBtn){
             mPsql.setId(idtext.getText().toString());
             //mPsql.Process(DB_NAME,"deldata",context);
         }
