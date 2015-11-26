@@ -424,6 +424,8 @@ public class MainActivity extends Activity implements OnClickListener{
     @Override
     public void onClick(View v){
         SQLProcesser mPsql = new SQLProcesser();
+        mPsql.setDbname(DB_NAME);
+        mPsql.setContext(context);
 
         if(v.getId() == R.id.showBtn){
             //mPsql.Process(DB_NAME,"show",context);
