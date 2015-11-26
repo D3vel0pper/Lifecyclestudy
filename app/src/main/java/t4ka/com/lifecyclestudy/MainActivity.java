@@ -445,11 +445,13 @@ public class MainActivity extends Activity implements OnClickListener{
             mPsql.setName(nametext.getText().toString());
             //mPsql.Process(DB_NAME,"insert",context);
         } else if(v.getId() == R.id.updateBtn){
+            mPsql.setType("update");
             mPsql.setName(nametext.getText().toString());
             mPsql.setName(commenttext.getText().toString());
             mPsql.setId(idtext.getText().toString());
             //mPsql.Process(DB_NAME,"update",context);
         } else if(v.getId() == R.id.deldataBtn){
+            mPsql.setType("deldata");
             mPsql.setId(idtext.getText().toString());
             //mPsql.Process(DB_NAME,"deldata",context);
         }

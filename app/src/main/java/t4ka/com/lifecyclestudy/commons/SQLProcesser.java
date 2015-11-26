@@ -29,7 +29,7 @@ public class SQLProcesser {
     }
 
     public void setType(String parameter){
-
+        mType = parameter;
     }
 
     public void setDbname(String dbname){
@@ -49,9 +49,7 @@ public class SQLProcesser {
     }
 
     public void Process(String TABLE_NAME) {
-        //SQLiteDatabase db;
         try {
-            //error is occured at here
             db = mContext.openOrCreateDatabase(mDbname,Context.MODE_PRIVATE,null);
         } catch (NullPointerException e) {
             db = null;
