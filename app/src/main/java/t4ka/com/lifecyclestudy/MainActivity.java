@@ -39,6 +39,7 @@ public class MainActivity extends Activity implements OnClickListener{
     private int DB_MODE = Context.MODE_PRIVATE;
     private Button createBtn,deletetableBtn,createtableBtn,insertBtn,updateBtn,deldataBtn,showBtn;
     private EditText idtext,nametext,commenttext;
+    private SQLiteDatabase db;
 
 
     @Override
@@ -430,6 +431,7 @@ public class MainActivity extends Activity implements OnClickListener{
         if(v.getId() == R.id.showBtn){
             //mPsql.Process(DB_NAME,"show",context);
         } else if(v.getId() == R.id.createBtn){
+            //db = openOrCreateDatabase(DB_NAME,DB_MODE,null);
             mPsql.setType("create");
             //mPsql.Process(DB_NAME,"create",context);
         } else if(v.getId() == R.id.deletetableBtn){

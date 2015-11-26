@@ -2,6 +2,7 @@ package t4ka.com.lifecyclestudy.commons;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -51,7 +52,7 @@ public class SQLProcesser {
         //SQLiteDatabase db;
         try {
             //error is occured at here
-            db = SQLiteDatabase.openOrCreateDatabase(mDbname, null);
+            db = mContext.openOrCreateDatabase(mDbname,Context.MODE_PRIVATE,null);
         } catch (NullPointerException e) {
             db = null;
             e.printStackTrace();
