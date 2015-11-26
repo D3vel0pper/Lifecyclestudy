@@ -3,7 +3,6 @@ package t4ka.com.lifecyclestudy;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -64,7 +63,7 @@ public class MainActivity extends Activity {
 
 
         //Create Btn
-        createBtn.setOnClickListener((View.OnClickListener)this);
+        createBtn.setOnClickListener((android.view.View.OnClickListener)this);
        /*
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -424,7 +423,7 @@ public class MainActivity extends Activity {
     public void onClick(View v){
         SQLProcesser mPsql = new SQLProcesser();
 
-        if(v == showBtn){
+        if(v.getId() == R.id.createBtn){
             //mPsql.Process(DB_NAME,"show",context);
         } else if(v == createBtn){
             mPsql.setType("create");
@@ -441,13 +440,15 @@ public class MainActivity extends Activity {
             //mPsql.Process(DB_NAME,"insert",context);
         } else if(v == updateBtn){
             mPsql.setName(nametext.getText().toString());
-            mPsql.setName(commenttext.getText().toString());
+            mPsql.setComment(commenttext.getText().toString());
             mPsql.setId(idtext.getText().toString());
             //mPsql.Process(DB_NAME,"update",context);
         } else if(v == deldataBtn){
             mPsql.setId(idtext.getText().toString());
             //mPsql.Process(DB_NAME,"deldata",context);
         }
+        mPsql.setDbname(DB_NAME);
+        mPsql.setContext(context);
         mPsql.Process(TABLE_NAME);
     }
 

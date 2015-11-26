@@ -28,7 +28,7 @@ public class SQLProcesser {
     }
 
     public void setType(String parameter){
-
+        mType = parameter;
     }
 
     public void setDbname(String dbname){
