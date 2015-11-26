@@ -30,7 +30,7 @@ import t4ka.com.lifecyclestudy.adapter.*;
 import t4ka.com.lifecyclestudy.commons.*;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,9 @@ public class MainActivity extends Activity {
         //Called When App created(started)
         Toast.makeText(this, "onCreate called",Toast.LENGTH_SHORT ).show();
         setContentView(R.layout.activity_main);
+
+        Button createBtn = (Button)findViewById(R.id.createBtn);
+        createBtn.setOnClickListener((OnClickListener)this);
 
 
     }
@@ -85,7 +88,14 @@ public class MainActivity extends Activity {
         //Call when App killed
         Toast.makeText(this,"onDestroy called",Toast.LENGTH_SHORT).show();
     }
-    
+
+    @Override
+    public void onClick(View v){
+        if(v.getId() == R.id.createBtn){
+            Toast.makeText(this, "createBtn Clicked",Toast.LENGTH_SHORT).show();
+        }
+    }
+
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
