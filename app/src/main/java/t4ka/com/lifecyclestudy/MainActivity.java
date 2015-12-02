@@ -39,7 +39,6 @@ public class MainActivity extends Activity implements OnClickListener{
     private int DB_MODE = Context.MODE_PRIVATE;
     private Button createBtn,deletetableBtn,createtableBtn,insertBtn,updateBtn,deldataBtn,showBtn;
     private EditText idtext,nametext,commenttext;
-    private SQLiteDatabase db;
 
 
     @Override

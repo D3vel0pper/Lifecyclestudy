@@ -14,7 +14,9 @@ import android.widget.Toast;
  * Created by taka-dhu on 2015/11/13.
  */
 public class SQLProcesser {
-    //mType = parameter
+    /**
+     * mType = parameter
+     */
     private String mType = "create";
     private Context mContext;
     private String mDbname;
