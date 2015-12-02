@@ -88,6 +88,7 @@ public class SQLProcesser {
                 Toast.makeText(mContext,"SQLite error at create",Toast.LENGTH_SHORT).show();
             }
         }
+
         try{
             db.close();
         } catch(NullPointerException e) {
