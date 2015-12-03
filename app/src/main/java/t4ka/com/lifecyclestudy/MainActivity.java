@@ -65,238 +65,22 @@ public class MainActivity extends Activity implements OnClickListener{
 
         //Create Btn
         createBtn.setOnClickListener(this);
-       /*
-        createBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Creating D.B.
-                SQLiteDatabase db;
-                //this method could be got java.io.FileNotFoundException.
-                //So u have to write try-catch Exception
-                try {
-                    db = openOrCreateDatabase("db01_01", DB_MODE, null);
-                } catch (NullPointerException e){
-                    db = null;
-                    e.printStackTrace();
-                }
-                Toast.makeText(context, "D.B.Created",Toast.LENGTH_SHORT).show();
-            }
-        });
-        */
-
         //CreateTable Btn
         createtableBtn.setOnClickListener(this);
-        /*
-        createtableBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-        public void onClick(View v){
-                SQLiteDatabase db;
-                try{
-                    db = openOrCreateDatabase("db01_01",DB_MODE,null);
-                } catch(NullPointerException e){
-                    db = null;
-                    e.printStackTrace();
-
-                }
-                //Write SQL description
-                String sql = "create table user (id integer primary key autoincrement, "
-                        + "name text not null, comment text not null);";
-                //try to process SQL
-                try{
-                    db.execSQL(sql);
-                } catch(NullPointerException e) {
-                    Log.e("NPE-ERROR",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at create",Toast.LENGTH_SHORT).show();
-                }
-                catch(SQLiteException e){
-                    Log.e("SQLite-ERROR",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"SQLite error at create",Toast.LENGTH_SHORT).show();
-                }
-                try{
-                    db.close();
-                } catch(NullPointerException e) {
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at close",Toast.LENGTH_SHORT).show();
-                }
-                //Toast.makeText(context,"writing success",Toast.LENGTH_SHORT).show();
-            }
-
-        });
-*/
-
         //Delete Btn
         deletetableBtn.setOnClickListener(this);
-/*
-        deletetableBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                SQLiteDatabase db;
-                try{
-                    db = openOrCreateDatabase("db01_01",Context.MODE_PRIVATE,null);
-                } catch(NullPointerException e){
-                    db = null;
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at open",Toast.LENGTH_SHORT).show();
-                }
-                //Write SQL description
-                String sql = "drop table user";
-                //try to process SQL
-                try{
-                    db.execSQL(sql);
-                } catch(NullPointerException e) {
-                    Log.e("NPE-ERROR",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at delete",Toast.LENGTH_SHORT).show();
-                }
-                catch(SQLiteException e){
-                    Log.e("SQLite-ERROR",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"SQLite error at delete",Toast.LENGTH_SHORT).show();
-                }
-                try{
-                    db.close();
-                } catch(NullPointerException e) {
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at close",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-        });
-*/
-
         //insert
         //memo -> these String has to be accessed from onClick, But it needs to be final
         final String id = idtext.getText().toString();
         final String name = nametext.getText().toString();
         final String comment = commenttext.getText().toString();
-
         insertBtn.setOnClickListener(this);
-
-/*
-        //insertBtn
-        insertBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                SQLiteDatabase db;
-                String sql = "insert into " + TABLE_NAME + "(name, comment)"
-                        + "values ('" + name + "','" + comment + "');";
-
-                try{
-                    db = openOrCreateDatabase(DB_NAME,DB_MODE,null);
-                } catch(NullPointerException e){
-                    db = null;
-                    Log.e("NPE-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context, "NPE at open",Toast.LENGTH_SHORT);
-                }
-
-                try{
-                    db.execSQL(sql);
-                } catch(NullPointerException e){
-                    Log.e("NPE-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context, "NPE at exec",Toast.LENGTH_SHORT);
-                }catch(SQLiteException e){
-                    Log.e("SQLite-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"SQLite error",Toast.LENGTH_SHORT);
-                }
-
-                try{
-                    db.close();
-                } catch(NullPointerException e){
-                    Log.e("NPE-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at close",Toast.LENGTH_SHORT);
-                }
-
-            }
-        });
-*/
-
         //updateBtn
         updateBtn.setOnClickListener(this);
-/*        updateBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                SQLiteDatabase db;
-                String sql = "update " + TABLE_NAME + " set "
-                        + "name='" + name + "', comment='" + comment + " where id=" + id  + ";";
-                try{
-                    db = openOrCreateDatabase(DB_NAME,DB_MODE,null);
-                } catch(NullPointerException e){
-                    db = null;
-                    Log.e("NPE-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at open",Toast.LENGTH_SHORT);
-                }
-
-                try{
-                    db.execSQL(sql);
-                } catch(NullPointerException e){
-                    Log.e("NPE-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at exec",Toast.LENGTH_SHORT);
-                } catch(SQLiteException e){
-                    Log.e("SQLite-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"SQLite error",Toast.LENGTH_SHORT);
-                }
-                try{
-                    db.close();
-                } catch(NullPointerException e){
-                    Log.e("NPE-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at close",Toast.LENGTH_SHORT);
-                }
-
-            }
-        });
-*/
         //deldataBtn
         deldataBtn.setOnClickListener(this);
+
 /*
-        deldataBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                SQLiteDatabase db;
-                String sql = "delete from " + TABLE_NAME + " where (id=" + id  + ");";
-                try{
-                    db = openOrCreateDatabase(DB_NAME,DB_MODE,null);
-                } catch(NullPointerException e){
-                    db = null;
-                    Log.e("NPE-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at open",Toast.LENGTH_SHORT);
-                }
-
-                try{
-                    db.execSQL(sql);
-                } catch(NullPointerException e){
-                    Log.e("NPE-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at exec",Toast.LENGTH_SHORT);
-                } catch(SQLiteException e){
-                    Log.e("SQLite-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"SQLite error",Toast.LENGTH_SHORT);
-                }
-                try{
-                    db.close();
-                } catch(NullPointerException e){
-                    Log.e("NPE-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at close",Toast.LENGTH_SHORT);
-                }
-
-            }
-        });
-
-        //-------------------------------------------------------------------------------------
-
         //making ListView
         final ListView lv = (ListView)findViewById(R.id.List);
         ListViewAdapter lvAdapter = new ListViewAdapter(context);
@@ -313,6 +97,7 @@ public class MainActivity extends Activity implements OnClickListener{
 
           //showBtn
         showBtn.setOnClickListener(this);
+
 /*        showBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
