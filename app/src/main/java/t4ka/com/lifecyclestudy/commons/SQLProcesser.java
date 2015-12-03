@@ -59,8 +59,10 @@ public class SQLProcesser {
         }
 
         if(mType.equals("create")){
+            Toast.makeText(mContext, "D.B.Created",Toast.LENGTH_SHORT).show();
         }
         else {
+            Toast.makeText(mContext, "D.B.opened",Toast.LENGTH_SHORT).show();
             if (mType.equals("createtable")) {
                 mSql = "create table user (id integer primary key autoincrement, "
                         + "name text not null, comment text not null);";
