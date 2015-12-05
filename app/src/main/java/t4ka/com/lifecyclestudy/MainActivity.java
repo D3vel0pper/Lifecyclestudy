@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class MainActivity extends Activity implements OnClickListener{
     private int DB_MODE = Context.MODE_PRIVATE;
     private Button createBtn,deletetableBtn,createtableBtn,insertBtn,updateBtn,deldataBtn,showBtn;
     private EditText idtext,nametext,commenttext;
+    private TextView DBdatas;
 
 
     @Override
@@ -60,6 +62,7 @@ public class MainActivity extends Activity implements OnClickListener{
         idtext = (EditText)findViewById(R.id.idText);
         nametext = (EditText)findViewById(R.id.nameText);
         commenttext = (EditText)findViewById(R.id.commentText);
+        DBdatas = (TextView)findViewById(R.id.dataText);
         //final ViewGroup viewGroup = (ViewGroup)findViewById(R.id.layout1);
 
 
@@ -203,11 +206,11 @@ public class MainActivity extends Activity implements OnClickListener{
     public void onDestroy(){
         super.onDestroy();
         //Call when App killed
-        SQLProcesser mPsql = new SQLProcesser();
+        /*SQLProcesser mPsql = new SQLProcesser();
         mPsql.setDbname(DB_NAME);
         mPsql.setContext(context);
         mPsql.setType("deletetable");
-        mPsql.Process(TABLE_NAME);
+        mPsql.Process(TABLE_NAME);*/
         Toast.makeText(this,"onDestroy called",Toast.LENGTH_SHORT).show();
     }
 
@@ -218,31 +221,28 @@ public class MainActivity extends Activity implements OnClickListener{
         mPsql.setContext(context);
 
         if(v.getId() == R.id.showBtn){
-            //mPsql.Process(DB_NAME,"show",context);
+            String dataString = mPsql.showDatas();
+            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.parentll);
+            DBdatas.setText(dataString);
+            linearLayout.invalidate();
         } else if(v.getId() == R.id.createBtn){
-            //db = openOrCreateDatabase(DB_NAME,DB_MODE,null);
             mPsql.setType("create");
-            //mPsql.Process(DB_NAME,"create",context);
         } else if(v.getId() == R.id.deletetableBtn){
             mPsql.setType("deletetable");
-            //mPsql.Process(DB_NAME,"deletetable",context);
         } else if(v.getId() == R.id.createtableBtn){
             mPsql.setType("createtable");
-            //mPsql.Process(DB_NAME,"createtable",context);
         } else if(v.getId() == R.id.insertBtn){
             mPsql.setType("insert");
             mPsql.setName(nametext.getText().toString());
-            //mPsql.Process(DB_NAME,"insert",context);
+            mPsql.setComment(commenttext.getText().toString());
         } else if(v.getId() == R.id.updateBtn){
             mPsql.setType("update");
             mPsql.setName(nametext.getText().toString());
             mPsql.setName(commenttext.getText().toString());
             mPsql.setId(idtext.getText().toString());
-            //mPsql.Process(DB_NAME,"update",context);
         } else if(v.getId() == R.id.deldataBtn){
             mPsql.setType("deldata");
             mPsql.setId(idtext.getText().toString());
-            //mPsql.Process(DB_NAME,"deldata",context);
         }
         mPsql.Process(TABLE_NAME);
     }

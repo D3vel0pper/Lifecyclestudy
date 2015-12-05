@@ -10,6 +10,8 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by taka-dhu on 2015/11/13.
  */
@@ -48,6 +50,33 @@ public class SQLProcesser {
 
     public void setComment(String comment){
         mComment = comment;
+    }
+
+    public String showDatas(){
+        TextView tv = new TextView(mContext);
+        db = mContext.openOrCreateDatabase(mDbname,Context.MODE_PRIVATE,null);
+        Cursor c = db.rawQuery("select * from user;",null);
+        c.moveToFirst();
+        int count = c.getCount();
+        String data = new String();
+        for(int i = 0;i < count;i++ ){
+            for(int j = 0;j < 3;j++) {
+                data += c.getString(j) + ":";
+            }
+            data += "\n";
+            c.moveToNext();
+        }
+        //tv.setText(data);
+
+        try{
+            db.close();
+            Toast.makeText(mContext,"Close at showing",Toast.LENGTH_SHORT).show();
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+            Toast.makeText(mContext,"NPE at close",Toast.LENGTH_SHORT).show();
+        }
+        //return tv;
+        return data;
     }
 
     public void Process(String TABLE_NAME) {
