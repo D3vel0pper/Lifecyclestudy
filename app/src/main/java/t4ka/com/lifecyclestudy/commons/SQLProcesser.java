@@ -79,6 +79,17 @@ public class SQLProcesser {
             }
             try{
                 db.execSQL(mSql);
+                if (mType.equals("createtable")) {
+                    Toast.makeText(mContext, "table created",Toast.LENGTH_SHORT).show();
+                } else if (mType.equals("deletetable")) {
+                    Toast.makeText(mContext, "table deleted",Toast.LENGTH_SHORT).show();
+                } else if (mType.equals("insert")) {
+                    Toast.makeText(mContext, "data inserted",Toast.LENGTH_SHORT).show();
+                } else if(mType.equals("update")){
+                    Toast.makeText(mContext, "data updated",Toast.LENGTH_SHORT).show();
+                } else if(mType.equals("deldata")){
+                    Toast.makeText(mContext, "data deleted",Toast.LENGTH_SHORT).show();
+                }
             } catch(NullPointerException e) {
                 Log.e("NPE-ERROR",e.toString());
                 e.printStackTrace();
