@@ -53,7 +53,6 @@ public class SQLProcesser {
     }
 
     public String showDatas(){
-        TextView tv = new TextView(mContext);
         db = mContext.openOrCreateDatabase(mDbname,Context.MODE_PRIVATE,null);
         Cursor c = db.rawQuery("select * from user;",null);
         c.moveToFirst();
@@ -66,7 +65,6 @@ public class SQLProcesser {
             data += "\n";
             c.moveToNext();
         }
-        //tv.setText(data);
 
         try{
             db.close();
@@ -75,7 +73,6 @@ public class SQLProcesser {
             e.printStackTrace();
             Toast.makeText(mContext,"NPE at close",Toast.LENGTH_SHORT).show();
         }
-        //return tv;
         return data;
     }
 
