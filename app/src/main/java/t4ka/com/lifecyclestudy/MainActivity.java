@@ -191,8 +191,20 @@ public class MainActivity extends Activity implements OnClickListener{
     private void inflatingLayout(SQLProcesser prcssr){
         LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
         View view = layoutInflater.inflate(R.layout.dbdialog,(ScrollView)findViewById(R.id.container));
-        final TextView tv = (TextView)findViewById(R.id.contents);
-        tv.setText(prcssr.showDatas());
+        //!!!point!!! DO NOT FORGET PUT "view.findViewById"  x"findViewById"
+        /*
+        check this site ↓
+        https://teratail.com/questions/4851
+        */
+        final TextView tv = (TextView)view.findViewById(R.id.contents);
+        //added test
+        String str = new String();
+        for(int i = 0;i < 30; i++){
+            str += "asdfghjkl\n";
+        }
+        tv.setText(str);
+        //end of adding
+        //tv.setText(prcssr.showDatas());
         new AlertDialog.Builder(MainActivity.this).setTitle("Custom Alert")
                 .setView(view).setPositiveButton("Close",
                 new DialogInterface.OnClickListener(){
