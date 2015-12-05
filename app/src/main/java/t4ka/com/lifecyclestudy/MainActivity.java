@@ -86,14 +86,6 @@ public class MainActivity extends Activity implements OnClickListener{
         //dialogBtn
         dialogBtn.setOnClickListener(this);
 
-/*
-        //making ListView
-        final ListView lv = (ListView)findViewById(R.id.List);
-        ListViewAdapter lvAdapter = new ListViewAdapter(context);
-        ArrayList<DBDatas> list = new ArrayList<>();
-
-*/
-
         //!!!!!!!Under Here, U Must Fix Descriptions!!!!!!
         /**
          * The Error is occurred in AdapterView
@@ -103,71 +95,6 @@ public class MainActivity extends Activity implements OnClickListener{
 
           //showBtn
         showBtn.setOnClickListener(this);
-
-/*        showBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-                //LayoutInflater inflater = LayoutInflater.from(context);
-                //View view = inflater.inflate(R.layout.dbdialog,viewGroup,true);
-                //final TextView text = (TextView)view.findViewById(R.id.contents);
-
-
-                //About SQLite
-                SQLiteDatabase db;
-                try{
-                    db = openOrCreateDatabase(DB_NAME,DB_MODE,null);
-                } catch(NullPointerException e){
-                    db = null;
-                    Log.e("NPE",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at open",Toast.LENGTH_SHORT);
-                }
-                String sql = "select * from " + TABLE_NAME + ";";
-
-                try{
-                    Cursor c = db.rawQuery(sql,null);
-                    boolean isEof = c.moveToFirst();
-                    while(isEof){
-                        TextView tv = new TextView(context);
-                        tv.setText(String.format("id=[%d], name=[%s], comment=[%s]",c.getInt(0),c.getString(1),c.getInt(2)));
-                        isEof = c.moveToNext();
-
-                    }
-                } catch(NullPointerException e){
-
-                    Log.e("NPE",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at Getting Data",Toast.LENGTH_SHORT);
-                }
-
-
-                new AlertDialog.Builder(context).setTitle("DialogTest").setView(lv)
-                        .setPositiveButton("Close",new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //if u won't do anything, u have to keep here blank
-                            }
-                        }).show();
-
-                try{
-                    db.close();
-                } catch(NullPointerException e){
-                    Log.e("NPE-error",e.toString());
-                    e.printStackTrace();
-                    Toast.makeText(context,"NPE at close",Toast.LENGTH_SHORT);
-                }
-
-            }
-        });
-
-        lvAdapter.setDataList(list);
-        lv.setAdapter(lvAdapter);
-
-        idtext.setText("");
-        nametext.setText("");
-        commenttext.setText("");
-*/
     }
 
     @Override

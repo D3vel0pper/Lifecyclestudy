@@ -5,9 +5,9 @@ package t4ka.com.lifecyclestudy.commons;
  */
 
 public class DBDatas {
-    private int id;
-    private String name;
-    private String comment;
+    private int id = 0;
+    private String name = "";
+    private String comment = "";
 
     public int getId() {
         return id;
