@@ -104,7 +104,7 @@ public class SQLProcesser {
                         + "values ('" + mName + "','" + mComment + "');";
             } else if(mType.equals("update")){
                 mSql = "update " + TABLE_NAME + " set "
-                        + "name='" + mName + "', comment='" + mComment + " where id=" + mId  + ";";
+                        + "name='" + mName + "', comment='" + mComment + "' where id=" + mId  + ";";
             } else if(mType.equals("deldata")){
                 mSql = "delete from " + TABLE_NAME + " where (id=" + mId  + ");";
             }
@@ -124,12 +124,12 @@ public class SQLProcesser {
             } catch(NullPointerException e) {
                 Log.e("NPE-ERROR",e.toString());
                 e.printStackTrace();
-                Toast.makeText(mContext,"NPE at create",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"NPE at exec",Toast.LENGTH_SHORT).show();
             }
             catch(SQLiteException e){
                 Log.e("SQLite-ERROR",e.toString());
                 e.printStackTrace();
-                Toast.makeText(mContext,"SQLite error at create",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"SQLite error at exec",Toast.LENGTH_SHORT).show();
             }
         }
 

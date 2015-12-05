@@ -150,12 +150,11 @@ public class MainActivity extends Activity implements OnClickListener{
         SQLProcesser mPsql = new SQLProcesser();
         mPsql.setDbname(DB_NAME);
         mPsql.setContext(context);
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.parentll);
 
         if(v.getId() == R.id.showBtn){
             String dataString = mPsql.showDatas();
-            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.parentll);
             DBdatas.setText(dataString);
-            linearLayout.invalidate();
         } else if(v.getId() == R.id.createBtn){
             mPsql.setType("create");
         } else if(v.getId() == R.id.deletetableBtn){
@@ -176,35 +175,25 @@ public class MainActivity extends Activity implements OnClickListener{
             mPsql.setId(idtext.getText().toString());
         } else if(v.getId() == R.id.dialogBtn){
             inflatingLayout(mPsql);
-            /*
-            new AlertDialog.Builder(MainActivity.this).setTitle("Alert").setMessage(mPsql.showDatas()).setPositiveButton("close"
-                    ,new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            }).show();
-            */
         }
         mPsql.Process(TABLE_NAME);
+        linearLayout.invalidate();
     }
 
     private void inflatingLayout(SQLProcesser prcssr){
         LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
         View view = layoutInflater.inflate(R.layout.dbdialog,(ScrollView)findViewById(R.id.container));
-        //!!!point!!! DO NOT FORGET PUT "view.findViewById"  x"findViewById"
-        /*
-        check this site ↓
-        https://teratail.com/questions/4851
-        */
         final TextView tv = (TextView)view.findViewById(R.id.contents);
         //added test
+        /*
         String str = new String();
         for(int i = 0;i < 30; i++){
             str += "asdfghjkl\n";
         }
         tv.setText(str);
+        */
         //end of adding
-        //tv.setText(prcssr.showDatas());
+        tv.setText(prcssr.showDatas());
         new AlertDialog.Builder(MainActivity.this).setTitle("Custom Alert")
                 .setView(view).setPositiveButton("Close",
                 new DialogInterface.OnClickListener(){
