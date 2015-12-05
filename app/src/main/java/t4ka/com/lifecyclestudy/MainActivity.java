@@ -203,6 +203,11 @@ public class MainActivity extends Activity implements OnClickListener{
     public void onDestroy(){
         super.onDestroy();
         //Call when App killed
+        SQLProcesser mPsql = new SQLProcesser();
+        mPsql.setDbname(DB_NAME);
+        mPsql.setContext(context);
+        mPsql.setType("deletetable");
+        mPsql.Process(TABLE_NAME);
         Toast.makeText(this,"onDestroy called",Toast.LENGTH_SHORT).show();
     }
 
