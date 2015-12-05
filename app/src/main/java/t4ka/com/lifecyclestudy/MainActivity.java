@@ -184,6 +184,10 @@ public class MainActivity extends Activity implements OnClickListener{
         mPsql.Process(TABLE_NAME);
     }
 
+    private void inflatingLayout(){
+        
+    }
+
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
