@@ -174,18 +174,32 @@ public class MainActivity extends Activity implements OnClickListener{
             mPsql.setType("deldata");
             mPsql.setId(idtext.getText().toString());
         } else if(v.getId() == R.id.dialogBtn){
+            inflatingLayout(mPsql);
+            /*
             new AlertDialog.Builder(MainActivity.this).setTitle("Alert").setMessage(mPsql.showDatas()).setPositiveButton("close"
                     ,new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                 }
             }).show();
+            */
         }
         mPsql.Process(TABLE_NAME);
     }
 
-    private void inflatingLayout(){
-        
+    private void inflatingLayout(SQLProcesser prcssr){
+        LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+        View view = layoutInflater.inflate(R.layout.dbdialog,null);
+        final TextView tv = (TextView)findViewById(R.id.contents);
+        tv.setText(prcssr.showDatas());
+        new AlertDialog.Builder(MainActivity.this).setTitle("Custom Alert")
+                .setView(view).setPositiveButton("Close",
+                new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which){
+                    }
+                }).show();
+
     }
 
 /*
