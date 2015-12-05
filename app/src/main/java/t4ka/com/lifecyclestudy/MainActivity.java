@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -189,7 +190,7 @@ public class MainActivity extends Activity implements OnClickListener{
 
     private void inflatingLayout(SQLProcesser prcssr){
         LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
-        View view = layoutInflater.inflate(R.layout.dbdialog,null);
+        View view = layoutInflater.inflate(R.layout.dbdialog,(ScrollView)findViewById(R.id.container));
         final TextView tv = (TextView)findViewById(R.id.contents);
         tv.setText(prcssr.showDatas());
         new AlertDialog.Builder(MainActivity.this).setTitle("Custom Alert")
