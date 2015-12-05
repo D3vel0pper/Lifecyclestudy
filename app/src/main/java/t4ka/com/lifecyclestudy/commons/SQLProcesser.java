@@ -21,11 +21,11 @@ public class SQLProcesser {
      */
     private String mType = "create";
     private Context mContext;
-    private String mDbname;
-    private String mId;
-    private String mName;
-    private String mComment;
-    private String mSql;
+    private String mDbname = "DataBase";
+    private String mId = "0";
+    private String mName = "";
+    private String mComment = "";
+    private String mSql = "";
     private SQLiteDatabase db;
 
     public void setContext(Context context){
@@ -60,9 +60,14 @@ public class SQLProcesser {
         String data = new String();
         for(int i = 0;i < count;i++ ){
             for(int j = 0;j < 3;j++) {
-                data += c.getString(j) + ":";
+                data += c.getString(j);
+                if((j+1) < 3){
+                    data += ":";
+                }
             }
-            data += "\n";
+            if((i+1) < count){
+                data += "\n";
+            }
             c.moveToNext();
         }
 

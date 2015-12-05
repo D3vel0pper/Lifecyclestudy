@@ -16,6 +16,11 @@
         android:layout_height="wrap_content" />
 </RelativeLayout>
     <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogBtn"
+        android:text="dialog"/>
+    <Button
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="Create_D.B."

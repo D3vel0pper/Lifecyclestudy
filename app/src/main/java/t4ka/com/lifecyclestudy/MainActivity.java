@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements OnClickListener{
     private String TABLE_NAME = "user";
     private String DB_NAME = "db01_01";
     private int DB_MODE = Context.MODE_PRIVATE;
-    private Button createBtn,deletetableBtn,createtableBtn,insertBtn,updateBtn,deldataBtn,showBtn;
+    private Button createBtn,deletetableBtn,createtableBtn,insertBtn,updateBtn,deldataBtn,showBtn,dialogBtn;
     private EditText idtext,nametext,commenttext;
     private TextView DBdatas;
 
@@ -59,6 +59,7 @@ public class MainActivity extends Activity implements OnClickListener{
         updateBtn = (Button)findViewById(R.id.updateBtn);
         deldataBtn = (Button)findViewById(R.id.deldataBtn);
         showBtn = (Button)findViewById(R.id.showBtn);
+        dialogBtn = (Button)findViewById(R.id.dialogBtn);
         idtext = (EditText)findViewById(R.id.idText);
         nametext = (EditText)findViewById(R.id.nameText);
         commenttext = (EditText)findViewById(R.id.commentText);
@@ -82,6 +83,8 @@ public class MainActivity extends Activity implements OnClickListener{
         updateBtn.setOnClickListener(this);
         //deldataBtn
         deldataBtn.setOnClickListener(this);
+        //dialogBtn
+        dialogBtn.setOnClickListener(this);
 
 /*
         //making ListView
@@ -243,6 +246,13 @@ public class MainActivity extends Activity implements OnClickListener{
         } else if(v.getId() == R.id.deldataBtn){
             mPsql.setType("deldata");
             mPsql.setId(idtext.getText().toString());
+        } else if(v.getId() == R.id.dialogBtn){
+            new AlertDialog.Builder(MainActivity.this).setTitle("Alert").setMessage(mPsql.showDatas()).setPositiveButton("close"
+                    ,new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }).show();
         }
         mPsql.Process(TABLE_NAME);
     }
