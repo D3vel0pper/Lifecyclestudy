@@ -39,7 +39,7 @@ public class MainActivity extends Activity implements OnClickListener{
     private String TABLE_NAME = "user";
     private String DB_NAME = "db01_01";
     private int DB_MODE = Context.MODE_PRIVATE;
-    private Button createBtn,deletetableBtn,createtableBtn,insertBtn,updateBtn,deldataBtn,showBtn,dialogBtn;
+    private Button createBtn,deletetableBtn,createtableBtn,insertBtn,updateBtn,deldataBtn,showBtn;
     private EditText idtext,nametext,commenttext;
     private TextView DBdatas;
 
@@ -60,7 +60,6 @@ public class MainActivity extends Activity implements OnClickListener{
         updateBtn = (Button)findViewById(R.id.updateBtn);
         deldataBtn = (Button)findViewById(R.id.deldataBtn);
         showBtn = (Button)findViewById(R.id.showBtn);
-        dialogBtn = (Button)findViewById(R.id.dialogBtn);
         idtext = (EditText)findViewById(R.id.idText);
         nametext = (EditText)findViewById(R.id.nameText);
         commenttext = (EditText)findViewById(R.id.commentText);
@@ -84,9 +83,7 @@ public class MainActivity extends Activity implements OnClickListener{
         updateBtn.setOnClickListener(this);
         //deldataBtn
         deldataBtn.setOnClickListener(this);
-        //dialogBtn
-        dialogBtn.setOnClickListener(this);
-
+        
         //!!!!!!!Under Here, U Must Fix Descriptions!!!!!!
         /**
          * The Error is occurred in AdapterView
@@ -153,8 +150,7 @@ public class MainActivity extends Activity implements OnClickListener{
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.parentll);
 
         if(v.getId() == R.id.showBtn){
-            String dataString = mPsql.showDatas();
-            DBdatas.setText(dataString);
+            inflatingLayout(mPsql);
         } else if(v.getId() == R.id.createBtn){
             mPsql.setType("create");
         } else if(v.getId() == R.id.deletetableBtn){
@@ -173,8 +169,6 @@ public class MainActivity extends Activity implements OnClickListener{
         } else if(v.getId() == R.id.deldataBtn){
             mPsql.setType("deldata");
             mPsql.setId(idtext.getText().toString());
-        } else if(v.getId() == R.id.dialogBtn){
-            inflatingLayout(mPsql);
         }
         mPsql.Process(TABLE_NAME);
         linearLayout.invalidate();
