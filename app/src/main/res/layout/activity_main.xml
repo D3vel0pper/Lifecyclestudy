@@ -108,6 +108,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/showBtn"/>
+        android:id="@+id/showBtn"
+        android:text="Show"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dataText"/>
 
 </LinearLayout>
