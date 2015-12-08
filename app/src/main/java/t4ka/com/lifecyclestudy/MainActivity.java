@@ -28,6 +28,7 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import t4ka.com.lifecyclestudy.adapter.*;
 import t4ka.com.lifecyclestudy.commons.*;
@@ -83,7 +84,7 @@ public class MainActivity extends Activity implements OnClickListener{
         updateBtn.setOnClickListener(this);
         //deldataBtn
         deldataBtn.setOnClickListener(this);
-        
+
         //!!!!!!!Under Here, U Must Fix Descriptions!!!!!!
         /**
          * The Error is occurred in AdapterView
@@ -93,6 +94,9 @@ public class MainActivity extends Activity implements OnClickListener{
 
           //showBtn
         showBtn.setOnClickListener(this);
+
+        AdjustDatas();
+
     }
 
     @Override
@@ -195,6 +199,34 @@ public class MainActivity extends Activity implements OnClickListener{
                     public void onClick(DialogInterface dialog, int which){
                     }
                 }).show();
+
+    }
+
+    private void AdjustDatas(){
+        /**
+         * Adjusting test data for custom listView
+         */
+        //make a new list of DBDatas
+        List<DBDatas> objects = new ArrayList<DBDatas>();
+        //make data u need for
+        DBDatas item1  = new DBDatas();
+        item1.setId(0);
+        item1.setName("Name1");
+        item1.setComment("Comment1");
+        DBDatas item2 = new DBDatas();
+        item2.setId(1);
+        item2.setName("Name2");
+        item2.setComment("Comment2");
+        //add instances to List of DBDatas object
+        objects.add(item1);
+        objects.add(item2);
+
+        //Give an adapter for setting Views
+        DataAdapter dataAdapter = new DataAdapter(context,0,objects);
+        //set container ListView
+        ListView listView = (ListView)findViewById(R.id.itemlist);
+        //set adapter which contains data u want.
+        listView.setAdapter(dataAdapter);
 
     }
 
