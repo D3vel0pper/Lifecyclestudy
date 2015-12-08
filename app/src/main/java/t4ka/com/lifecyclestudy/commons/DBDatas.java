@@ -5,13 +5,16 @@ package t4ka.com.lifecyclestudy.commons;
  */
 
 public class DBDatas {
-    private Integer id = 0;
+    private String id = "0";
     private String name = "";
     private String comment = "";
 
-    public String getId() { return id.toString(); }
+    public String getId() {
+        //return id.toString();
+        return this.id;
+    }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 /**
  * Created by taka-dhu on 2015/11/13.
  */
@@ -79,6 +81,28 @@ public class SQLProcesser {
             Toast.makeText(mContext,"NPE at close",Toast.LENGTH_SHORT).show();
         }
         return data;
+    }
+
+    public List<DBDatas> showDatas(List<DBDatas> objects){
+        db = mContext.openOrCreateDatabase(mDbname,Context.MODE_PRIVATE,null);
+        Cursor c = db.rawQuery("select * from user;",null);
+        c.moveToFirst();
+        int count = c.getCount();
+        for(int i = 0;i < count; i++){
+            DBDatas item = new DBDatas();
+            item.setId(c.getString(0));
+            item.setName(c.getString(1));
+            item.setComment(c.getString(2));
+            objects.add(item);
+            c.moveToNext();
+        }
+
+        try{
+            db.close();
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+        }
+        return objects;
     }
 
     public void Process(String TABLE_NAME) {

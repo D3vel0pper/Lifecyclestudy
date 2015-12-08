@@ -84,18 +84,8 @@ public class MainActivity extends Activity implements OnClickListener{
         updateBtn.setOnClickListener(this);
         //deldataBtn
         deldataBtn.setOnClickListener(this);
-
-        //!!!!!!!Under Here, U Must Fix Descriptions!!!!!!
-        /**
-         * The Error is occurred in AdapterView
-         * From Message, "addView() is not supported in AdapterView"
-         * U MUST UNDERSTAND The work of Adapter.
-         * */
-
           //showBtn
         showBtn.setOnClickListener(this);
-
-        AdjustDatas();
 
     }
 
@@ -154,7 +144,8 @@ public class MainActivity extends Activity implements OnClickListener{
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.parentll);
 
         if(v.getId() == R.id.showBtn){
-            inflatingLayout(mPsql);
+            AdjustDatas(mPsql);
+            //inflatingLayout(mPsql);
         } else if(v.getId() == R.id.createBtn){
             mPsql.setType("create");
         } else if(v.getId() == R.id.deletetableBtn){
@@ -177,20 +168,12 @@ public class MainActivity extends Activity implements OnClickListener{
         mPsql.Process(TABLE_NAME);
         linearLayout.invalidate();
     }
-
+/*
     private void inflatingLayout(SQLProcesser prcssr){
         LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
         View view = layoutInflater.inflate(R.layout.dbdialog,(ScrollView)findViewById(R.id.container));
         final TextView tv = (TextView)view.findViewById(R.id.contents);
-        //added test
-        /*
-        String str = new String();
-        for(int i = 0;i < 30; i++){
-            str += "asdfghjkl\n";
-        }
-        tv.setText(str);
-        */
-        //end of adding
+        //set the data from SQLProcesser
         tv.setText(prcssr.showDatas());
         new AlertDialog.Builder(MainActivity.this).setTitle("Custom Alert")
                 .setView(view).setPositiveButton("Close",
@@ -199,16 +182,19 @@ public class MainActivity extends Activity implements OnClickListener{
                     public void onClick(DialogInterface dialog, int which){
                     }
                 }).show();
-
     }
-
-    private void AdjustDatas(){
+*/
+    private void AdjustDatas(SQLProcesser prcssr){
         /**
          * Adjusting test data for custom listView
          */
+        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        View view = inflater.inflate(R.layout.dbdialog,(ListView)findViewById(R.id.List));
         //make a new list of DBDatas
         List<DBDatas> objects = new ArrayList<DBDatas>();
         //make data u need for
+        objects = prcssr.showDatas(objects);
+        /*
         DBDatas item1  = new DBDatas();
         item1.setId(0);
         item1.setName("Name1");
@@ -220,13 +206,23 @@ public class MainActivity extends Activity implements OnClickListener{
         //add instances to List of DBDatas object
         objects.add(item1);
         objects.add(item2);
+        */
 
         //Give an adapter for setting Views
         DataAdapter dataAdapter = new DataAdapter(context,0,objects);
         //set container ListView
-        ListView listView = (ListView)findViewById(R.id.itemlist);
+        ListView listView = (ListView)findViewById(R.id.List);
         //set adapter which contains data u want.
         listView.setAdapter(dataAdapter);
+
+        //make Dialog
+        new AlertDialog.Builder(MainActivity.this).setTitle("Custom Alert")
+                .setView(view).setPositiveButton("Close",
+                new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which){
+                    }
+                }).show();
 
     }
 
