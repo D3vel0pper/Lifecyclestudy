@@ -26,7 +26,7 @@ public class DataAdapter extends ArrayAdapter<DBDatas> {
     @Override
     public View getView(int position,View convertView, ViewGroup parent){
         //get position's data
-        DBDatas item = (DBDatas)getItem(position);
+        DBDatas item = getItem(position);
         //make a single instance of convertView
         if(convertView == null){
             convertView = inflater.inflate(R.layout.db_list_items,null);

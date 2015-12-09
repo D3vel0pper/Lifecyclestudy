@@ -211,7 +211,7 @@ public class MainActivity extends Activity implements OnClickListener{
         //Give an adapter for setting Views
         DataAdapter dataAdapter = new DataAdapter(context,0,objects);
         //set container ListView
-        ListView listView = (ListView)findViewById(R.id.List);
+        ListView listView = (ListView)view.findViewById(R.id.List);
         //set adapter which contains data u want.
         listView.setAdapter(dataAdapter);
 
