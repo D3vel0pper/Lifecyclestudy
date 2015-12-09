@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -42,13 +43,13 @@ public class MainActivity extends Activity implements OnClickListener{
     private int DB_MODE = Context.MODE_PRIVATE;
     private Button createBtn,deletetableBtn,createtableBtn,insertBtn,updateBtn,deldataBtn,showBtn;
     private EditText idtext,nametext,commenttext;
-    private TextView DBdatas;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //hide keyboard at first
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_main);
         //Called When App created(started)
         Toast.makeText(this, "onCreate called",Toast.LENGTH_SHORT ).show();
@@ -64,8 +65,6 @@ public class MainActivity extends Activity implements OnClickListener{
         idtext = (EditText)findViewById(R.id.idText);
         nametext = (EditText)findViewById(R.id.nameText);
         commenttext = (EditText)findViewById(R.id.commentText);
-        DBdatas = (TextView)findViewById(R.id.dataText);
-        //final ViewGroup viewGroup = (ViewGroup)findViewById(R.id.layout1);
 
 
         //Create Btn
@@ -75,10 +74,6 @@ public class MainActivity extends Activity implements OnClickListener{
         //Delete Btn
         deletetableBtn.setOnClickListener(this);
         //insert
-        //memo -> these String has to be accessed from onClick, But it needs to be final
-        final String id = idtext.getText().toString();
-        final String name = nametext.getText().toString();
-        final String comment = commenttext.getText().toString();
         insertBtn.setOnClickListener(this);
         //updateBtn
         updateBtn.setOnClickListener(this);
@@ -128,11 +123,6 @@ public class MainActivity extends Activity implements OnClickListener{
     public void onDestroy(){
         super.onDestroy();
         //Call when App killed
-        /*SQLProcesser mPsql = new SQLProcesser();
-        mPsql.setDbname(DB_NAME);
-        mPsql.setContext(context);
-        mPsql.setType("deletetable");
-        mPsql.Process(TABLE_NAME);*/
         Toast.makeText(this,"onDestroy called",Toast.LENGTH_SHORT).show();
     }
 
@@ -145,7 +135,6 @@ public class MainActivity extends Activity implements OnClickListener{
 
         if(v.getId() == R.id.showBtn){
             AdjustDatas(mPsql);
-            //inflatingLayout(mPsql);
         } else if(v.getId() == R.id.createBtn){
             mPsql.setType("create");
         } else if(v.getId() == R.id.deletetableBtn){
@@ -168,22 +157,7 @@ public class MainActivity extends Activity implements OnClickListener{
         mPsql.Process(TABLE_NAME);
         linearLayout.invalidate();
     }
-/*
-    private void inflatingLayout(SQLProcesser prcssr){
-        LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
-        View view = layoutInflater.inflate(R.layout.dbdialog,(ScrollView)findViewById(R.id.container));
-        final TextView tv = (TextView)view.findViewById(R.id.contents);
-        //set the data from SQLProcesser
-        tv.setText(prcssr.showDatas());
-        new AlertDialog.Builder(MainActivity.this).setTitle("Custom Alert")
-                .setView(view).setPositiveButton("Close",
-                new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which){
-                    }
-                }).show();
-    }
-*/
+
     private void AdjustDatas(SQLProcesser prcssr){
         /**
          * Adjusting test data for custom listView
@@ -194,19 +168,6 @@ public class MainActivity extends Activity implements OnClickListener{
         List<DBDatas> objects = new ArrayList<DBDatas>();
         //make data u need for
         objects = prcssr.showDatas(objects);
-        /*
-        DBDatas item1  = new DBDatas();
-        item1.setId(0);
-        item1.setName("Name1");
-        item1.setComment("Comment1");
-        DBDatas item2 = new DBDatas();
-        item2.setId(1);
-        item2.setName("Name2");
-        item2.setComment("Comment2");
-        //add instances to List of DBDatas object
-        objects.add(item1);
-        objects.add(item2);
-        */
 
         //Give an adapter for setting Views
         DataAdapter dataAdapter = new DataAdapter(context,0,objects);
@@ -216,7 +177,7 @@ public class MainActivity extends Activity implements OnClickListener{
         listView.setAdapter(dataAdapter);
 
         //make Dialog
-        new AlertDialog.Builder(MainActivity.this).setTitle("Custom Alert")
+        new AlertDialog.Builder(MainActivity.this).setTitle("Data List")
                 .setView(view).setPositiveButton("Close",
                 new DialogInterface.OnClickListener(){
                     @Override

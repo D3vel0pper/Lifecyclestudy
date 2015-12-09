@@ -54,35 +54,6 @@ public class SQLProcesser {
         mComment = comment;
     }
 
-    public String showDatas(){
-        db = mContext.openOrCreateDatabase(mDbname,Context.MODE_PRIVATE,null);
-        Cursor c = db.rawQuery("select * from user;",null);
-        c.moveToFirst();
-        int count = c.getCount();
-        String data = new String();
-        for(int i = 0;i < count;i++ ){
-            for(int j = 0;j < 3;j++) {
-                data += c.getString(j);
-                if((j+1) < 3){
-                    data += ":";
-                }
-            }
-            if((i+1) < count){
-                data += "\n";
-            }
-            c.moveToNext();
-        }
-
-        try{
-            db.close();
-            Toast.makeText(mContext,"Close at showing",Toast.LENGTH_SHORT).show();
-        } catch(NullPointerException e) {
-            e.printStackTrace();
-            Toast.makeText(mContext,"NPE at close",Toast.LENGTH_SHORT).show();
-        }
-        return data;
-    }
-
     public List<DBDatas> showDatas(List<DBDatas> objects){
         db = mContext.openOrCreateDatabase(mDbname,Context.MODE_PRIVATE,null);
         Cursor c = db.rawQuery("select * from user;",null);

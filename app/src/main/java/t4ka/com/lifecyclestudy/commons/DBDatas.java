@@ -9,10 +9,7 @@ public class DBDatas {
     private String name = "";
     private String comment = "";
 
-    public String getId() {
-        //return id.toString();
-        return this.id;
-    }
+    public String getId() { return id; }
 
     public void setId(String id) {
         this.id = id;
