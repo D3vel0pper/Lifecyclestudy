@@ -66,12 +66,21 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
             Intent intent = new Intent(SecondActivity.this,MyService.class);
             bindService(intent,serviceConnection, Context.BIND_AUTO_CREATE );
         } else if(v.getId() == R.id.UnBindBtn){
-            if(bound) {
+            if(bound){
                 unbindService(serviceConnection);
                 bound = false;
             }
         }
 
+    }
+
+    @Override
+    public void onDestroy(){
+        stopService(new Intent(SecondActivity.this,MyService.class));
+        if(bound){
+            unbindService(serviceConnection);
+            bound = false;
+        }
     }
 
 
