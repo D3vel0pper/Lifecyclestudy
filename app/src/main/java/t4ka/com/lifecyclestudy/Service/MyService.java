@@ -1,10 +1,17 @@
 package t4ka.com.lifecyclestudy.Service;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.widget.Toast;
+
+import t4ka.com.lifecyclestudy.R;
+import t4ka.com.lifecyclestudy.activity.SecondActivity;
 
 /**
  * Created by taka-dhu on 2016/04/13.
@@ -43,9 +50,17 @@ public class MyService extends Service {
         return true;
     }
 
+    private NotificationManager notificationManager;
+    private ConditionVariable condition;
+
     @Override
     public void onCreate() {
         Toast.makeText(this,"Service's on Create",Toast.LENGTH_SHORT).show();
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //make another thread not to stop the process
+        Thread thread = new Thread(null,task,"NotifyingService");
+        condition = new ConditionVariable(false);
+        thread.start();
     }
 
     @Override
@@ -60,6 +75,44 @@ public class MyService extends Service {
         Toast.makeText(this,"MyService's onDestroy",Toast.LENGTH_SHORT).show();
     }
 
+    private int WAIT_TIME = 4000;
+    private Runnable task = new Runnable() {
+        public void run() {
+            for(int i = 0;i < 4;++i) {
+                showNotification(android.support.v7.appcompat.R.drawable.circle,"Showing Circle");
+                if(condition.block(WAIT_TIME)){
+                    break;
+                }
+                showNotification(android.support.v7.appcompat.R.drawable.triangle,"Showing Triangle");
+                if(condition.block(WAIT_TIME)){
+                    break;
+                }
+                showNotification(android.support.v7.appcompat.R.drawable.note,"Showing Note");
+                if(condition.block(WAIT_TIME)){
+                    break;
+                }
+            }
+            //End Animation & Service
+            MyService.this.stopSelf();
+        }
+    };
 
+    //get Layout file's ID to get unique ID
+    private static int NOTIFICATION_ID = R.layout.activity_second;
+
+    private void showNotification(int drawableId, CharSequence text) {
+        //decide notification content
+        Notification notification = new Notification(drawableId,null,System.currentTimeMillis());
+
+        //PendingIntent is Intent triggered in settle timing
+        //if Notification tapped, then, StartActivity
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                this,0,new Intent(this, SecondActivity.class),0 );
+
+        //Setting Notification
+        notification.setLatestEventInfo(this,"MyService",text,contentIntent);
+
+        notificationManager.notify(NOTIFICATION_ID,notification);
+    }
 
 }
