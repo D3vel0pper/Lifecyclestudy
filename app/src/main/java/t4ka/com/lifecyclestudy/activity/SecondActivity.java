@@ -16,6 +16,11 @@ import android.widget.Toast;
 import t4ka.com.lifecyclestudy.R;
 import t4ka.com.lifecyclestudy.Service.MyService;
 
+/**
+ * At first, You Must Check the AndroidManifest
+ * Then, check is it contained service which you want to use
+ * If there isn't, you must add the tag <service></service>
+ */
 public class SecondActivity extends ActionBarActivity implements View.OnClickListener{
     /**
      * myService -> holder for holding MyService
