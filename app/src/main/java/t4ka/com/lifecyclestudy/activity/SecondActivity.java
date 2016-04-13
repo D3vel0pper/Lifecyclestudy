@@ -17,13 +17,21 @@ import t4ka.com.lifecyclestudy.R;
 import t4ka.com.lifecyclestudy.Service.MyService;
 
 public class SecondActivity extends ActionBarActivity implements View.OnClickListener{
-    //from reference
+    /**
+     * myService -> holder for holding MyService
+     * boolean bound -> flag of that is bound or not
+     */
     MyService myService;
     boolean bound = false;
 
-    //Interface with Service
+    /**
+     * call when connect to or disconnect from the service. This is passed to bindService()
+     */
     private ServiceConnection serviceConnection = new ServiceConnection() {
 
+        /**
+         * Called when connect to service
+         */
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             MyService.MyServiceLocalBinder localBinder = (MyService.MyServiceLocalBinder)service;
@@ -32,6 +40,9 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
             bound = true;
         }
 
+        /**
+         * Called when disconnect from service
+         */
         @Override
         public void onServiceDisconnected(ComponentName name) {
             Toast.makeText(SecondActivity.this,"onServiceDisconnect()",Toast.LENGTH_SHORT).show();
@@ -74,6 +85,9 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
 
     }
 
+    /**
+     * without stopping description, Resource will be leak and throw Exception
+     */
     @Override
     public void onDestroy(){
         stopService(new Intent(SecondActivity.this,MyService.class));
@@ -105,4 +119,5 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
 
         return super.onOptionsItemSelected(item);
     }
+
 }
