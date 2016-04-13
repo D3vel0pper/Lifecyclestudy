@@ -127,7 +127,7 @@ public class MainActivity extends Activity implements OnClickListener{
         mPsql.setContext(context);
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.parentll);
 
-        if(v.getId() == R.id.moveStudySBtn){
+        if(v.getId() == R.id.moveNotifBtn){
             Intent intent = new Intent(MainActivity.this,SecondActivity.class);
             startActivity(intent);
         }
