@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements OnClickListener{
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_main);
         //Called When App created(started)
-        Toast.makeText(this, "onCreate called",Toast.LENGTH_SHORT ).show();
+        Toast.makeText(this, "this is StudyService branch",Toast.LENGTH_SHORT ).show();
         setContentView(R.layout.activity_main);
 
         createBtn = (Button)findViewById(R.id.createBtn);
