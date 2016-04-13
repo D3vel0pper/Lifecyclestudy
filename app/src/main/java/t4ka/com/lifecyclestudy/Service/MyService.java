@@ -18,7 +18,7 @@ public class MyService extends Service {
      */
     public class MyServiceLocalBinder extends Binder {
         //getService
-        MyService getService() {
+        public MyService getService() {
             return MyService.this;
         }
     }

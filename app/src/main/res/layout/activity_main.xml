@@ -4,28 +4,41 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/parentll">
-    <Button
-        android:layout_height="wrap_content"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:text="Create_D.B."
-        android:id="@+id/createBtn"
-        ></Button>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Create_D.B."
+            android:id="@+id/createBtn"
+            ></Button>
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Create_table."
+            android:id="@+id/createtableBtn"
+            ></Button>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Delete_table."
+            android:id="@+id/deletetableBtn"
+            ></Button>
+    </LinearLayout>
 
     <Button
-        android:layout_height="wrap_content"
+        android:id="@+id/moveStudySBtn"
         android:layout_width="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="Create_table."
-        android:id="@+id/createtableBtn"
-        ></Button>
+        android:layout_height="wrap_content"
+        android:text="moveStudyS"/>
 
-    <Button
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="Delete_table."
-        android:id="@+id/deletetableBtn"
-        ></Button>
+
 
     <LinearLayout
         android:layout_width="wrap_content"

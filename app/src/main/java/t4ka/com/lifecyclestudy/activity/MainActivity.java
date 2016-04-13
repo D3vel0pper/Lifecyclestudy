@@ -2,8 +2,10 @@ package t4ka.com.lifecyclestudy.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +44,10 @@ public class MainActivity extends Activity implements OnClickListener{
         //Called When App created(started)
         Toast.makeText(this, "this is StudyService branch",Toast.LENGTH_SHORT ).show();
         setContentView(R.layout.activity_main);
+
+        Button moveStudyS = (Button)findViewById(R.id.moveStudySBtn);
+        moveStudyS.setOnClickListener(this);
+
 
         createBtn = (Button)findViewById(R.id.createBtn);
         deletetableBtn = (Button)findViewById(R.id.deletetableBtn);
@@ -121,7 +127,11 @@ public class MainActivity extends Activity implements OnClickListener{
         mPsql.setContext(context);
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.parentll);
 
-        if(v.getId() == R.id.showBtn){
+        if(v.getId() == R.id.moveStudySBtn){
+            Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+            startActivity(intent);
+        }
+        else if(v.getId() == R.id.showBtn){
             AdjustDatas(mPsql);
         } else if(v.getId() == R.id.createBtn){
             mPsql.setType("create");
