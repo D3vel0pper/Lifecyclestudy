@@ -95,6 +95,7 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
      */
     @Override
     public void onDestroy(){
+        super.onDestroy();
         stopService(new Intent(SecondActivity.this,MyService.class));
         if(bound){
             unbindService(serviceConnection);
