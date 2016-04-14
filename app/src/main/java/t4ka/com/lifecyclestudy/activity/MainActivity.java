@@ -45,7 +45,7 @@ public class MainActivity extends Activity implements OnClickListener{
         Toast.makeText(this, "this is StudyService branch",Toast.LENGTH_SHORT ).show();
         setContentView(R.layout.activity_main);
 
-        Button moveStudyS = (Button)findViewById(R.id.moveStudySBtn);
+        Button moveStudyS = (Button)findViewById(R.id.moveNotifBtn);
         moveStudyS.setOnClickListener(this);
 
 

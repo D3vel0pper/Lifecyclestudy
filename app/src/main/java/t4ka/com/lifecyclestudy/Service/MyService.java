@@ -79,15 +79,15 @@ public class MyService extends Service {
     private Runnable task = new Runnable() {
         public void run() {
             for(int i = 0;i < 4;++i) {
-                showNotification(android.support.v7.appcompat.R.drawable.circle,"Showing Circle");
+                showNotification(R.mipmap.ic_launcher,"Showing Circle");
                 if(condition.block(WAIT_TIME)){
                     break;
                 }
-                showNotification(android.support.v7.appcompat.R.drawable.triangle,"Showing Triangle");
+                showNotification(R.mipmap.ic_launcher,"Showing Triangle");
                 if(condition.block(WAIT_TIME)){
                     break;
                 }
-                showNotification(android.support.v7.appcompat.R.drawable.note,"Showing Note");
+                showNotification(R.mipmap.ic_launcher,"Showing Note");
                 if(condition.block(WAIT_TIME)){
                     break;
                 }
