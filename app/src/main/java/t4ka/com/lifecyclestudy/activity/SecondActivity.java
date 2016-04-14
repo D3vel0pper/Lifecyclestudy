@@ -22,6 +22,10 @@ import t4ka.com.lifecyclestudy.Service.MyService;
 
 public class SecondActivity extends ActionBarActivity implements View.OnClickListener{
 
+    /**
+     * May Be this process style will be able to show over android 5.0
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +49,9 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
             NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
             builder.setSmallIcon(R.mipmap.ic_launcher);
 
-            builder.setContentTitle("Title");
-            builder.setContentText("TextText");
-            builder.setSubText("SubText");
-            builder.setContentInfo("Info");
-            //TimeStamp (use for Time of now, time of got mail,countdown)
-//            builder.setWhen();
-
-            //Notification will shown when it's arrived (after ver4.4, never shown)
-            //totally, App-name will be recommended
-            builder.setTicker("Ticker");
+            //set CustomLayout
+            RemoteViews customView = new RemoteViews(getPackageName(),R.layout.customlayout);
+            customView.setTextViewText(R.id.textview_text,"_(:3｣ ∠)_");
 
             NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
             manager.notify(R.layout.activity_second,builder.build());
@@ -67,6 +64,7 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
 
     @Override
     public void onDestroy(){
+        super.onDestroy();
     }
 
 
