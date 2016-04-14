@@ -1,6 +1,7 @@
 package t4ka.com.lifecyclestudy.activity;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -56,6 +57,16 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
             //totally, App-name will be recommended
             builder.setTicker("Ticker");
 
+            //Give the Intent
+            Intent intent = new Intent(getApplicationContext(),SecondActivity.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext()
+                    ,R.layout.activity_second,intent
+                    ,PendingIntent.FLAG_ONE_SHOT);
+            builder.setContentIntent(contentIntent);
+
+            //when tapped dismiss from the notification bar
+            builder.setAutoCancel(true);
+
             NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
             manager.notify(R.layout.activity_second,builder.build());
 
@@ -67,6 +78,7 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
 
     @Override
     public void onDestroy(){
+        super.onDestroy();
     }
 
 
