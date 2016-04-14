@@ -112,6 +112,7 @@ public class MyService extends Service {
         //Setting Notification
         notification.setLatestEventInfo(this,"MyService",text,contentIntent);
 
+        //update info of notification -> circle -> triangle -> note
         notificationManager.notify(NOTIFICATION_ID,notification);
     }
 
