@@ -18,38 +18,6 @@ import t4ka.com.lifecyclestudy.R;
 import t4ka.com.lifecyclestudy.Service.MyService;
 
 public class SecondActivity extends ActionBarActivity implements View.OnClickListener{
-    /**
-     * myService -> holder for holding MyService
-     * boolean bound -> flag of that is bound or not
-     */
-    MyService myService;
-    boolean bound = false;
-
-    /**
-     * call when connect to or disconnect from the service. This is passed to bindService()
-     */
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-
-        /**
-         * Called when connect to service
-         */
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            MyService.MyServiceLocalBinder localBinder = (MyService.MyServiceLocalBinder)service;
-            myService = localBinder.getService();
-            Toast.makeText(SecondActivity.this,"onServiceConnected()",Toast.LENGTH_SHORT).show();
-            bound = true;
-        }
-
-        /**
-         * Called when disconnect from service
-         */
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            Toast.makeText(SecondActivity.this,"onServiceDisconnect()",Toast.LENGTH_SHORT).show();
-            bound = false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,31 +39,14 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.StartBtn){
-            startService(new Intent(SecondActivity.this,MyService.class));
-        } else if(v.getId() == R.id.StopBtn){
-            stopService(new Intent(SecondActivity.this,MyService.class));
-        } else if(v.getId() == R.id.BindBtn){
-            Intent intent = new Intent(SecondActivity.this,MyService.class);
-            bindService(intent,serviceConnection, Context.BIND_AUTO_CREATE );
-        } else if(v.getId() == R.id.UnBindBtn){
-            if(bound){
-                unbindService(serviceConnection);
-                bound = false;
-            }
+        }
+        else if(v.getId() == R.id.StopBtn){
         }
 
     }
 
-    /**
-     * without stopping description, Resource will be leak and throw Exception
-     */
     @Override
     public void onDestroy(){
-        stopService(new Intent(SecondActivity.this,MyService.class));
-        if(bound){
-            unbindService(serviceConnection);
-            bound = false;
-        }
     }
 
 
