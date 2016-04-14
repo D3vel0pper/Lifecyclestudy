@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import t4ka.com.lifecyclestudy.R;
@@ -28,10 +31,10 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
         StartBtn.setOnClickListener(this);
         Button StopBtn = (Button)findViewById(R.id.StopBtn);
         StopBtn.setOnClickListener(this);
-        Button BindBtn = (Button)findViewById(R.id.BindBtn);
-        BindBtn.setOnClickListener(this);
-        Button UnBindBtn = (Button)findViewById(R.id.UnBindBtn);
-        UnBindBtn.setOnClickListener(this);
+//        Button BindBtn = (Button)findViewById(R.id.BindBtn);
+//        BindBtn.setOnClickListener(this);
+//        Button UnBindBtn = (Button)findViewById(R.id.UnBindBtn);
+//        UnBindBtn.setOnClickListener(this);
 
 
     }
@@ -39,6 +42,23 @@ public class SecondActivity extends ActionBarActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.StartBtn){
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+            builder.setSmallIcon(R.mipmap.ic_launcher);
+
+            builder.setContentTitle("Title");
+            builder.setContentText("TextText");
+            builder.setSubText("SubText");
+            builder.setContentInfo("Info");
+            //TimeStamp (use for Time of now, time of got mail,countdown)
+//            builder.setWhen();
+
+            //Notification will shown when it's arrived (after ver4.4, never shown)
+            //totally, App-name will be recommended
+            builder.setTicker("Ticker");
+
+            NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
+            manager.notify(R.layout.activity_second,builder.build());
+
         }
         else if(v.getId() == R.id.StopBtn){
         }
