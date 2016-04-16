@@ -4,116 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/parentll">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Create_D.B."
-            android:id="@+id/createBtn"
-            ></Button>
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Create_table."
-            android:id="@+id/createtableBtn"
-            ></Button>
-
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Delete_table."
-            android:id="@+id/deletetableBtn"
-            ></Button>
-    </LinearLayout>
 
     <Button
-        android:id="@+id/moveStudySBtn"
+        android:id="@+id/isBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="moveStudyS"/>
+        android:text="ISBtn"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="id"/>
-            <EditText
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-            android:id="@+id/idText"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="name"/>
-            <EditText
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/nameText"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="comment"/>
-            <EditText
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/commentText"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/layout1">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/insertBtn"
-            android:text="Insert"/>
-        <Button
-            android:layout_marginLeft="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/updateBtn"
-            android:text="Update"/>
-        <Button
-            android:layout_marginLeft="2dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/deldataBtn"
-            android:text="DEL_Data"/>
-        </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/showBtn"
-        android:text="Show"/>
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/itemlist">
-            </ListView>
 </LinearLayout>

@@ -21,6 +21,7 @@
             android:label="@string/title_activity_second" >
         </activity>
         <service android:name=".Service.MyService"/>
+        <service android:name=".Service.MyIntentService"/>
     </application>
 
 </manifest>
