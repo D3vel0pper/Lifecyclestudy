@@ -95,27 +95,8 @@ public class MainActivity extends Activity implements OnClickListener{
     public void onClick(View v){
 
         if(v.getId() == R.id.startBtn){
-            //v.setEnabled(false);
-            //translate monochrome
-            Bitmap outBitMap = bitmap.copy(Bitmap.Config.ARGB_8888,true);
-
-            int width = outBitMap.getWidth();
-            int height = outBitMap.getHeight();
-            //int totalPixcel = width*height;
-
-            int i, j;
-            for(i = 0;i < height;i++){
-                for(j = 0;j < width;j++){
-                    int pixcelColor = outBitMap.getPixel(j,i);
-                    int y = (int) (0.299 * Color.red(pixcelColor) +
-                    0.587 * Color.green(pixcelColor) +
-                    0.114 * Color.blue(pixcelColor));
-                    outBitMap.setPixel(j,i,Color.rgb(y,y,y));
-                }
-            }
-            //Then, show BMP
-
-            imageView.setImageBitmap(outBitMap);
+            Monochromize task = new Monochromize(imageView);
+            task.execute(bitmap);
         } else if(v.getId() == R.id.countBtn){
             c++;
             ((Button)v).setText(c.toString());
