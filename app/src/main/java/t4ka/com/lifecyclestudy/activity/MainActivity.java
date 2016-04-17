@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,20 +33,31 @@ import t4ka.com.lifecyclestudy.commons.*;
 
 public class MainActivity extends Activity implements OnClickListener{
 
+    private TextView counter;
+    private ImageView imageView;
+    private Integer c=0;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView imageView;
-        Bitmap bitmap;
         Button countBtn,startBtn;
 
         //prepare Image
         bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.american_flag);
         //show image before convert
+        imageView = (ImageView)findViewById(R.id.flagImage);
+        imageView.setImageBitmap(bitmap);
 
+        startBtn = (Button)findViewById(R.id.startBtn);
+        startBtn.setOnClickListener(this);
+        countBtn = (Button)findViewById(R.id.countBtn);
+        countBtn.setOnClickListener(this);
+
+        counter = (TextView)findViewById(R.id.counter);
+        counter.setText(c.toString());
 
     }
 
@@ -81,7 +94,32 @@ public class MainActivity extends Activity implements OnClickListener{
     @Override
     public void onClick(View v){
 
-        if(v.getId() == R.id.isBtn){
+        if(v.getId() == R.id.startBtn){
+            //v.setEnabled(false);
+            //translate monochrome
+            Bitmap outBitMap = bitmap.copy(Bitmap.Config.ARGB_8888,true);
+
+            int width = outBitMap.getWidth();
+            int height = outBitMap.getHeight();
+            //int totalPixcel = width*height;
+
+            int i, j;
+            for(i = 0;i < height;i++){
+                for(j = 0;j < width;j++){
+                    int pixcelColor = outBitMap.getPixel(j,i);
+                    int y = (int) (0.299 * Color.red(pixcelColor) +
+                    0.587 * Color.green(pixcelColor) +
+                    0.114 * Color.blue(pixcelColor));
+                    outBitMap.setPixel(j,i,Color.rgb(y,y,y));
+                }
+            }
+            //Then, show BMP
+
+            imageView.setImageBitmap(outBitMap);
+        } else if(v.getId() == R.id.countBtn){
+            c++;
+            ((Button)v).setText(c.toString());
+
         }
 
     }
