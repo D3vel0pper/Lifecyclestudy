@@ -6,9 +6,18 @@
     android:id="@+id/parentll">
 
     <Button
-        android:id="@+id/isBtn"
+        android:id="@+id/countBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ISBtn"/>
+        android:text="count-up"/>
+    <Button
+        android:id="@+id/startBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="start" />
+    <ImageView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/flagImage"/>
+
 
 </LinearLayout>

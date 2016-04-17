@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -28,13 +31,20 @@ import t4ka.com.lifecyclestudy.commons.*;
 
 public class MainActivity extends Activity implements OnClickListener{
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button isBtn = (Button)findViewById(R.id.isBtn);
-        isBtn.setOnClickListener(this);
+        ImageView imageView;
+        Bitmap bitmap;
+        Button countBtn,startBtn;
+
+        //prepare Image
+        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.american_flag);
+        //show image before convert
+
 
     }
 
@@ -72,11 +82,6 @@ public class MainActivity extends Activity implements OnClickListener{
     public void onClick(View v){
 
         if(v.getId() == R.id.isBtn){
-            Intent intent = new Intent(this, MyIntentService.class);
-            //putExtra method is passing String data to another activity.
-            intent.putExtra("IntentServiceCommand","TestText");
-            this.startService(intent);
-            Toast.makeText(this,"Clicked", Toast.LENGTH_SHORT).show();
         }
 
     }
