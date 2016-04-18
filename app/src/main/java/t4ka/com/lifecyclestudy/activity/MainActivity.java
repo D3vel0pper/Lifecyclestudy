@@ -95,9 +95,8 @@ public class MainActivity extends Activity implements OnClickListener{
     public void onClick(View v){
 
         if(v.getId() == R.id.startBtn){
-            //Monochromize task = new Monochromize(imageView);//normal
-            Monochromize task = new Monochromize(this,imageView);//for progress dialog
-            task.execute(bitmap);
+            HttpResponsTask task = new HttpResponsTask(this);
+            task.execute();
         } else if(v.getId() == R.id.countBtn){
             c++;
             ((Button)v).setText(c.toString());

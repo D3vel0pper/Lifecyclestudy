@@ -38,7 +38,7 @@ public class Monochromize extends AsyncTask<Bitmap, Integer, Bitmap> {
     @Override
     protected void onPreExecute(){
         progressDialog = new ProgressDialog(uiActivity);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(false);
         progressDialog.show();
     }
