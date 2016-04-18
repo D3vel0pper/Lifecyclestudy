@@ -22,6 +22,7 @@ public class Monochromize extends AsyncTask<Bitmap, Integer, Bitmap> {
      * onPreExecute() -> write preparing things before doInBackground
      * doInbackground(Params...) -> write the process which u wanna do in background
      * onProgressUpdate(Progress...) -> write to show the progress of process in UI thread
+     *      like a progress-bar
      * onPostExecute(Result) -> write the process
      *  which show or reflect to the UI thread after completed process in background
      */
