@@ -4,7 +4,14 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,7 +44,7 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
 
         try {
             //Make URL
-            url = new URL("http://weather.livedoor.com/weather_hacks/webservice");
+            url = new URL(LocBaseUrl + "");
             //Make Connection Object
             con = (HttpURLConnection)url.openConnection();
             //Set Request Method
@@ -51,6 +58,16 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
 
             //Connect
             con.connect();
+            InputStream in = con.getInputStream();
+            String readSt = readInputStream(in);
+            try{
+                JSONObject jsonData = new JSONObject(readSt).getJSONObject("");
+            } catch(JSONException e){
+                e.printStackTrace();
+                flag = false;
+            }
+
+
 
         } catch(MalformedURLException e){
             e.printStackTrace();
@@ -73,4 +90,24 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
             Toast.makeText(act,"Failed to connect....",Toast.LENGTH_SHORT).show();
         }
     }
+
+    //for get JSON data
+    public String readInputStream(InputStream in) throws IOException, UnsupportedEncodingException {
+        StringBuffer sb = new StringBuffer();
+        String st = "";
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(in,"UTF-8"));
+        while((st = br.readLine()) != null){
+            sb.append(st);
+        }
+        try {
+            in.close();
+        } catch(Exception e){
+            e.printStackTrace();
+            flag = false;
+        }
+
+        return sb.toString();
+    }
+
 }
