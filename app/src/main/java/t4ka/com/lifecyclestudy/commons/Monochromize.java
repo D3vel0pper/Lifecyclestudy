@@ -1,5 +1,7 @@
 package t4ka.com.lifecyclestudy.commons;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -10,8 +12,13 @@ import android.widget.ImageView;
  */
 public class Monochromize extends AsyncTask<Bitmap, Integer, Bitmap> {
     private ImageView imageView;
-    public Monochromize(ImageView iv){
+    private ProgressDialog progressDialog;//for progress dialog
+    private Activity uiActivity;//for progress dialog
+
+    //Activity activity -> for progress dialog
+    public Monochromize(Activity activity,ImageView iv){
         super();
+        uiActivity = activity;
         imageView = iv;
     }
 
@@ -27,12 +34,23 @@ public class Monochromize extends AsyncTask<Bitmap, Integer, Bitmap> {
      *  which show or reflect to the UI thread after completed process in background
      */
 
+    //for progress dialog
+    @Override
+    protected void onPreExecute(){
+        progressDialog = new ProgressDialog(uiActivity);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setIndeterminate(false);
+        progressDialog.show();
+    }
+
     @Override
     protected Bitmap doInBackground(Bitmap... bitMap){
         Bitmap outBitMap = bitMap[0].copy(Bitmap.Config.ARGB_8888,true);
 
         int width = outBitMap.getWidth();
         int height = outBitMap.getHeight();
+        int totalPixcel = width * height;//for progress dialog
+        progressDialog.setMax(totalPixcel);//for progress dialog
 
         int i,j;
         for(i = 0;i < height;i++){
@@ -43,12 +61,21 @@ public class Monochromize extends AsyncTask<Bitmap, Integer, Bitmap> {
                 0.114 * Color.blue(pixcelColor));
                 outBitMap.setPixel(j,i, Color.rgb(y,y,y));
             }
+            onProgressUpdate(j + i);//for progress dialog
         }
         return outBitMap;
     }
 
+    //for progress dialog
+    @Override
+    protected  void onProgressUpdate(Integer... progress){
+        progressDialog.incrementProgressBy(progress[0]);
+    }
+
+
     @Override
     protected void onPostExecute(Bitmap result){
+        progressDialog.dismiss();//for progress dialog
         imageView.setImageBitmap(result);
     }
 
