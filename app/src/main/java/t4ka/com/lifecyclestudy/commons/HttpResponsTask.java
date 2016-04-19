@@ -2,6 +2,8 @@ package t4ka.com.lifecyclestudy.commons;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -26,10 +28,12 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
     private String LocBaseUrl;
     private Activity act = null;
     private boolean flag = true;
+    private TextView textView;
 
-    public HttpResponsTask(Activity activity){
+    public HttpResponsTask(Activity activity,TextView tv){
         this.LocBaseUrl = activity.getString(R.string.LocBaseUrl);
         this.act = activity;
+        this.textView = tv;
     }
 
     @Override
@@ -43,8 +47,8 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
         URL url = null;
 
         try {
-            //Make URL
-            url = new URL(LocBaseUrl + "");
+            //Make URL (this example shows Kurume city in Fukuoka)
+            url = new URL(LocBaseUrl + "?city=400040");
             //Make Connection Object
             con = (HttpURLConnection)url.openConnection();
             //Set Request Method
@@ -58,14 +62,18 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
 
             //Connect
             con.connect();
+
             InputStream in = con.getInputStream();
             String readSt = readInputStream(in);
+            return readSt;
+            /*
             try{
                 JSONObject jsonData = new JSONObject(readSt).getJSONObject("");
             } catch(JSONException e){
                 e.printStackTrace();
                 flag = false;
             }
+            */
 
 
 
@@ -74,6 +82,7 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
             flag = false;
         } catch(IOException e){
             e.printStackTrace();
+            Log.d("IOException",e.toString());
             flag = false;
         }
 
@@ -84,10 +93,13 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
     @Override
     protected void onPostExecute(String result){
         super.onPostExecute(result);
-        if(flag){
-            Toast.makeText(act,"Connection Success",Toast.LENGTH_SHORT).show();
+        if(result == null){
+            Toast.makeText(act,"!! result is null !!",Toast.LENGTH_SHORT).show();
         } else{
-            Toast.makeText(act,"Failed to connect....",Toast.LENGTH_SHORT).show();
+            textView.setText(result);
+            textView.invalidate();
+            //Toast.makeText(act,"Failed to connect....",Toast.LENGTH_SHORT).show();
+
         }
     }
 

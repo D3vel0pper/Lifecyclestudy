@@ -43,18 +43,10 @@ public class MainActivity extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button countBtn,startBtn;
-
-        //prepare Image
-        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.american_flag);
-        //show image before convert
-        imageView = (ImageView)findViewById(R.id.flagImage);
-        imageView.setImageBitmap(bitmap);
+        Button startBtn;
 
         startBtn = (Button)findViewById(R.id.startBtn);
         startBtn.setOnClickListener(this);
-        countBtn = (Button)findViewById(R.id.countBtn);
-        countBtn.setOnClickListener(this);
 
         counter = (TextView)findViewById(R.id.counter);
         counter.setText(c.toString());
@@ -95,12 +87,8 @@ public class MainActivity extends Activity implements OnClickListener{
     public void onClick(View v){
 
         if(v.getId() == R.id.startBtn){
-            HttpResponsTask task = new HttpResponsTask(this);
+            HttpResponsTask task = new HttpResponsTask(this,counter);
             task.execute();
-        } else if(v.getId() == R.id.countBtn){
-            c++;
-            ((Button)v).setText(c.toString());
-
         }
 
     }
