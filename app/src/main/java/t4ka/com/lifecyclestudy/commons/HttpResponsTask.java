@@ -6,6 +6,10 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,51 +47,24 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
 
     @Override
     protected String doInBackground(Void... params){
-        HttpURLConnection con = null;
-        URL url = null;
 
+        String result = null;
+
+        //Make Request Object
+        Request request = new Request.Builder()
+                .url(LocBaseUrl + "?city=400040").get().build();
+        //Make Client Object
+        OkHttpClient client = new OkHttpClient();
+        //Request then get result
         try {
-            //Make URL (this example shows Kurume city in Fukuoka)
-            url = new URL(LocBaseUrl + "?city=400040");
-            //Make Connection Object
-            con = (HttpURLConnection)url.openConnection();
-            //Set Request Method
-            con.setRequestMethod("POST");
-            //false -> not allow auto redirect
-            con.setInstanceFollowRedirects(false);
-            //true if u wanna read from connection
-            con.setDoInput(true);
-            //true if u wanna write in connection
-            con.setDoOutput(true);
-
-            //Connect
-            con.connect();
-
-            InputStream in = con.getInputStream();
-            String readSt = readInputStream(in);
-            return readSt;
-            /*
-            try{
-                JSONObject jsonData = new JSONObject(readSt).getJSONObject("");
-            } catch(JSONException e){
-                e.printStackTrace();
-                flag = false;
-            }
-            */
-
-
-
-        } catch(MalformedURLException e){
-            e.printStackTrace();
-            flag = false;
+            Response response = client.newCall(request).execute();
+            result = response.body().string();
         } catch(IOException e){
-            e.printStackTrace();
             Log.d("IOException",e.toString());
-            flag = false;
         }
 
-
-        return null;
+        //Return
+        return result;
     }
 
     @Override
@@ -103,23 +80,5 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
         }
     }
 
-    //for get JSON data
-    public String readInputStream(InputStream in) throws IOException, UnsupportedEncodingException {
-        StringBuffer sb = new StringBuffer();
-        String st = "";
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(in,"UTF-8"));
-        while((st = br.readLine()) != null){
-            sb.append(st);
-        }
-        try {
-            in.close();
-        } catch(Exception e){
-            e.printStackTrace();
-            flag = false;
-        }
-
-        return sb.toString();
-    }
 
 }
