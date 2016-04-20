@@ -37,6 +37,7 @@ public class MainActivity extends Activity implements OnClickListener{
     private ImageView imageView;
     private Integer c=0;
     private Bitmap bitmap;
+    private LinearLayout parent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class MainActivity extends Activity implements OnClickListener{
         setContentView(R.layout.activity_main);
 
         Button startBtn;
+
+        parent = (LinearLayout)findViewById(R.id.parentll);
 
         startBtn = (Button)findViewById(R.id.startBtn);
         startBtn.setOnClickListener(this);
@@ -87,7 +90,7 @@ public class MainActivity extends Activity implements OnClickListener{
     public void onClick(View v){
 
         if(v.getId() == R.id.startBtn){
-            HttpResponsTask task = new HttpResponsTask(this,counter);
+            HttpResponsTask task = new HttpResponsTask(this,counter,parent);
             task.execute();
         }
 

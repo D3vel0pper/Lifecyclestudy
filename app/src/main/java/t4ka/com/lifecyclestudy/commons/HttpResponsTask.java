@@ -3,6 +3,7 @@ package t4ka.com.lifecyclestudy.commons;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,23 +23,26 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.WeakHashMap;
 
 import t4ka.com.lifecyclestudy.R;
 
 /**
  * Created by taka-dhu on 2016/04/18.
  */
-public class HttpResponsTask extends AsyncTask <Void,Void,String> {
+public class HttpResponsTask extends AsyncTask <Void,Void,WheatherData> {
 
     private String LocBaseUrl;
     private Activity act = null;
-    private boolean flag = true;
     private TextView textView;
+    //layout which have each textview to show
+    private LinearLayout linearLayout;
 
-    public HttpResponsTask(Activity activity,TextView tv){
+    public HttpResponsTask(Activity activity,TextView tv,LinearLayout ll){
         this.LocBaseUrl = activity.getString(R.string.LocBaseUrl);
         this.act = activity;
         this.textView = tv;
+        this.linearLayout = ll;
     }
 
     @Override
@@ -46,7 +51,7 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
     }
 
     @Override
-    protected String doInBackground(Void... params){
+    protected WheatherData doInBackground(Void... params){
 
         String result = null;
 
@@ -62,21 +67,49 @@ public class HttpResponsTask extends AsyncTask <Void,Void,String> {
         } catch(IOException e){
             Log.d("IOException",e.toString());
         }
+        //make instance of Data
+        WheatherData data = new WheatherData();
+        //get JSON Data and then put to the Data structure
+        try{
+            JSONObject jsonObject = new JSONObject(result);
+            data.setTitle(jsonObject.getString("title"));
+            //data.setDescriptionText(jsonObject.getJSONObject("description").getString("text"));
+            data.setDescriptionTime(jsonObject.getJSONObject("description").getString("publicTime"));
+            data.setLocation(jsonObject.getJSONObject("location").getString("area") + " / " +
+                    jsonObject.getJSONObject("location").getString("prefecture") + " / " +
+                    jsonObject.getJSONObject("location").getString("city"));
+            JSONArray jsonArray = jsonObject.getJSONObject("copyright").getJSONArray("provider");
+            JSONObject temp = jsonArray.getJSONObject(0);
+            data.setwCopyright(temp.getString("name") + " : " + temp.getString("link") + "\n" +
+            jsonObject.getJSONObject("copyright").getString("link") + jsonObject.getJSONObject("copyright").getString("title"));
+
+        } catch(JSONException e){
+            Log.d("JSONException",e.toString());
+        } catch(NullPointerException e){
+            Log.d("NullPointerException",e.toString());
+        }
 
         //Return
-        return result;
+        return data;
     }
 
     @Override
-    protected void onPostExecute(String result){
+    protected void onPostExecute(WheatherData result){
         super.onPostExecute(result);
         if(result == null){
             Toast.makeText(act,"!! result is null !!",Toast.LENGTH_SHORT).show();
         } else{
-            textView.setText(result);
-            textView.invalidate();
-            //Toast.makeText(act,"Failed to connect....",Toast.LENGTH_SHORT).show();
-
+            TextView wTitle = (TextView)linearLayout.findViewById(R.id.wTitle);
+            wTitle.setText(result.getTitle());
+            TextView descTime = (TextView)linearLayout.findViewById(R.id.descTime);
+            descTime.setText(result.getDescriptionTime());
+            TextView descText = (TextView)linearLayout.findViewById(R.id.description);
+            descText.setText(result.getDescriptionText());
+            TextView wLocation = (TextView)linearLayout.findViewById(R.id.location);
+            wLocation.setText(result.getLocation());
+            TextView wCopyright = (TextView)linearLayout.findViewById(R.id.copyright);
+            wCopyright.setText(result.getCopyright());
+            linearLayout.invalidate();
         }
     }
 
