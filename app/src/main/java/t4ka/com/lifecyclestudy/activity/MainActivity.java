@@ -90,7 +90,7 @@ public class MainActivity extends Activity implements OnClickListener{
     public void onClick(View v){
 
         if(v.getId() == R.id.startBtn){
-            HttpResponsTask task = new HttpResponsTask(this,counter,parent);
+            HttpResponsTask task = new HttpResponsTask(this,parent);
             task.execute();
         }
 

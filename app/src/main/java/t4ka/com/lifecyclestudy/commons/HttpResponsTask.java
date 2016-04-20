@@ -34,14 +34,12 @@ public class HttpResponsTask extends AsyncTask <Void,Void,WheatherData> {
 
     private String LocBaseUrl;
     private Activity act = null;
-    private TextView textView;
     //layout which have each textview to show
     private LinearLayout linearLayout;
 
-    public HttpResponsTask(Activity activity,TextView tv,LinearLayout ll){
+    public HttpResponsTask(Activity activity,LinearLayout ll){
         this.LocBaseUrl = activity.getString(R.string.LocBaseUrl);
         this.act = activity;
-        this.textView = tv;
         this.linearLayout = ll;
     }
 
@@ -65,7 +63,7 @@ public class HttpResponsTask extends AsyncTask <Void,Void,WheatherData> {
             Response response = client.newCall(request).execute();
             result = response.body().string();
         } catch(IOException e){
-            Log.d("IOException",e.toString());
+            //Log.d("IOException",e.toString());
         }
         //make instance of Data
         WheatherData data = new WheatherData();
@@ -81,12 +79,10 @@ public class HttpResponsTask extends AsyncTask <Void,Void,WheatherData> {
             JSONArray jsonArray = jsonObject.getJSONObject("copyright").getJSONArray("provider");
             JSONObject temp = jsonArray.getJSONObject(0);
             data.setwCopyright(temp.getString("name") + " : " + temp.getString("link") + "\n" +
-            jsonObject.getJSONObject("copyright").getString("link") + jsonObject.getJSONObject("copyright").getString("title"));
+            jsonObject.getJSONObject("copyright").getString("link") + "\n" + jsonObject.getJSONObject("copyright").getString("title"));
 
         } catch(JSONException e){
-            Log.d("JSONException",e.toString());
-        } catch(NullPointerException e){
-            Log.d("NullPointerException",e.toString());
+            //Log.d("JSONException",e.toString());
         }
 
         //Return
@@ -94,21 +90,21 @@ public class HttpResponsTask extends AsyncTask <Void,Void,WheatherData> {
     }
 
     @Override
-    protected void onPostExecute(WheatherData result){
-        super.onPostExecute(result);
-        if(result == null){
+    protected void onPostExecute(WheatherData data){
+        super.onPostExecute(data);
+        if(data == null){
             Toast.makeText(act,"!! result is null !!",Toast.LENGTH_SHORT).show();
         } else{
             TextView wTitle = (TextView)linearLayout.findViewById(R.id.wTitle);
-            wTitle.setText(result.getTitle());
+            wTitle.setText(data.getTitle());
             TextView descTime = (TextView)linearLayout.findViewById(R.id.descTime);
-            descTime.setText(result.getDescriptionTime());
+            descTime.setText(data.getDescriptionTime());
             TextView descText = (TextView)linearLayout.findViewById(R.id.description);
-            descText.setText(result.getDescriptionText());
+            descText.setText(data.getDescriptionText());
             TextView wLocation = (TextView)linearLayout.findViewById(R.id.location);
-            wLocation.setText(result.getLocation());
+            wLocation.setText(data.getLocation());
             TextView wCopyright = (TextView)linearLayout.findViewById(R.id.copyright);
-            wCopyright.setText(result.getCopyright());
+            wCopyright.setText(data.getCopyright());
             linearLayout.invalidate();
         }
     }
