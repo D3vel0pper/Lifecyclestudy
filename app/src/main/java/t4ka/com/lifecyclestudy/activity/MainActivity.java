@@ -34,9 +34,6 @@ import t4ka.com.lifecyclestudy.commons.*;
 public class MainActivity extends Activity implements OnClickListener{
 
     private TextView counter;
-    private ImageView imageView;
-    private Integer c=0;
-    private Bitmap bitmap;
     private LinearLayout parent;
 
     @Override
@@ -50,10 +47,6 @@ public class MainActivity extends Activity implements OnClickListener{
 
         startBtn = (Button)findViewById(R.id.startBtn);
         startBtn.setOnClickListener(this);
-
-        counter = (TextView)findViewById(R.id.counter);
-        counter.setText(c.toString());
-
     }
 
     @Override
