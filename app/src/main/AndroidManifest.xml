@@ -20,7 +20,13 @@
             android:name=".activity.SecondActivity"
             android:label="@string/title_activity_second" >
         </activity>
-        <service android:name=".Service.MyService"/>
+
+        <service android:name=".Service.MyService" />
+
+        <activity
+            android:name=".activity.DrawerActivity"
+            android:label="@string/title_activity_drawer" >
+        </activity>
     </application>
 
 </manifest>
