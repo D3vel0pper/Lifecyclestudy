@@ -3,10 +3,13 @@ package t4ka.com.lifecyclestudy.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,60 +24,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 import t4ka.com.lifecyclestudy.R;
-import t4ka.com.lifecyclestudy.adapter.*;
-import t4ka.com.lifecyclestudy.commons.*;
+import t4ka.com.lifecyclestudy.Service.MyService;
 
+/**
+ * At first, You Must Check the AndroidManifest
+ * Then, check is it contained service which you want to use
+ * If there isn't, you must add the tag <service></service>
+ */
 
 public class MainActivity extends Activity implements OnClickListener{
 
-    private Context context = this;
-    private String TABLE_NAME = "user";
-    private String DB_NAME = "db01_01";
-    private int DB_MODE = Context.MODE_PRIVATE;
-    private Button createBtn,deletetableBtn,createtableBtn,insertBtn,updateBtn,deldataBtn,showBtn;
-    private EditText idtext,nametext,commenttext;
+    /**
+     * myService -> holder for holding MyService
+     * boolean bound -> flag of that is bound or not
+     */
+    MyService myService;
+    boolean bound = false;
+
+    /**
+     * call when connect to or disconnect from the service. This is passed to bindService()
+     */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+
+        /**
+         * Called when connect to service
+         */
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MyService.MyServiceLocalBinder localBinder = (MyService.MyServiceLocalBinder)service;
+            myService = localBinder.getService();
+            Toast.makeText(MainActivity.this,"onServiceConnected()",Toast.LENGTH_SHORT).show();
+            bound = true;
+        }
+
+        /**
+         * Called when disconnect from service
+         */
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Toast.makeText(MainActivity.this,"onServiceDisconnect()",Toast.LENGTH_SHORT).show();
+            bound = false;
+        }
+    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //hide keyboard at first
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.activity_main);
-        //Called When App created(started)
-        Toast.makeText(this, "this is StudyService branch",Toast.LENGTH_SHORT ).show();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_second);
 
-        Button moveStudyS = (Button)findViewById(R.id.moveStudySBtn);
-        moveStudyS.setOnClickListener(this);
-
-
-        createBtn = (Button)findViewById(R.id.createBtn);
-        deletetableBtn = (Button)findViewById(R.id.deletetableBtn);
-        createtableBtn = (Button)findViewById(R.id.createtableBtn);
-        insertBtn = (Button)findViewById(R.id.insertBtn);
-        updateBtn = (Button)findViewById(R.id.updateBtn);
-        deldataBtn = (Button)findViewById(R.id.deldataBtn);
-        showBtn = (Button)findViewById(R.id.showBtn);
-        idtext = (EditText)findViewById(R.id.idText);
-        nametext = (EditText)findViewById(R.id.nameText);
-        commenttext = (EditText)findViewById(R.id.commentText);
-
-
-        //Create Btn
-        createBtn.setOnClickListener(this);
-        //CreateTable Btn
-        createtableBtn.setOnClickListener(this);
-        //Delete Btn
-        deletetableBtn.setOnClickListener(this);
-        //insert
-        insertBtn.setOnClickListener(this);
-        //updateBtn
-        updateBtn.setOnClickListener(this);
-        //deldataBtn
-        deldataBtn.setOnClickListener(this);
-          //showBtn
-        showBtn.setOnClickListener(this);
+        Button StartBtn = (Button)findViewById(R.id.StartBtn);
+        StartBtn.setOnClickListener(this);
+        Button StopBtn = (Button)findViewById(R.id.StopBtn);
+        StopBtn.setOnClickListener(this);
+        Button BindBtn = (Button)findViewById(R.id.BindBtn);
+        BindBtn.setOnClickListener(this);
+        Button UnBindBtn = (Button)findViewById(R.id.UnBindBtn);
+        UnBindBtn.setOnClickListener(this);
 
     }
 
@@ -113,77 +119,38 @@ public class MainActivity extends Activity implements OnClickListener{
         Toast.makeText(this,"onRestart called",Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * without stopping description, Resource will be leak and throw Exception
+     */
     @Override
     public void onDestroy(){
         super.onDestroy();
-        //Call when App killed
+        stopService(new Intent(MainActivity.this,MyService.class));
+        if(bound){
+            unbindService(serviceConnection);
+            bound = false;
+        }
         Toast.makeText(this,"onDestroy called",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View v){
-        SQLProcesser mPsql = new SQLProcesser();
-        mPsql.setDbname(DB_NAME);
-        mPsql.setContext(context);
-        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.parentll);
+        if(v.getId() == R.id.StartBtn){
+            startService(new Intent(MainActivity.this,MyService.class));
+        } else if(v.getId() == R.id.StopBtn){
+            stopService(new Intent(MainActivity.this,MyService.class));
+        } else if(v.getId() == R.id.BindBtn){
+            Intent intent = new Intent(MainActivity.this,MyService.class);
+            bindService(intent,serviceConnection, Context.BIND_AUTO_CREATE );
+        } else if(v.getId() == R.id.UnBindBtn){
+            if(bound){
+                unbindService(serviceConnection);
+                bound = false;
+            }
+        }
 
-        if(v.getId() == R.id.moveStudySBtn){
-            Intent intent = new Intent(MainActivity.this,SecondActivity.class);
-            startActivity(intent);
-        }
-        else if(v.getId() == R.id.showBtn){
-            AdjustDatas(mPsql);
-        } else if(v.getId() == R.id.createBtn){
-            mPsql.setType("create");
-        } else if(v.getId() == R.id.deletetableBtn){
-            mPsql.setType("deletetable");
-        } else if(v.getId() == R.id.createtableBtn){
-            mPsql.setType("createtable");
-        } else if(v.getId() == R.id.insertBtn){
-            mPsql.setType("insert");
-            mPsql.setName(nametext.getText().toString());
-            mPsql.setComment(commenttext.getText().toString());
-        } else if(v.getId() == R.id.updateBtn){
-            mPsql.setType("update");
-            mPsql.setName(nametext.getText().toString());
-            mPsql.setName(commenttext.getText().toString());
-            mPsql.setId(idtext.getText().toString());
-        } else if(v.getId() == R.id.deldataBtn){
-            mPsql.setType("deldata");
-            mPsql.setId(idtext.getText().toString());
-        }
-        mPsql.Process(TABLE_NAME);
-        linearLayout.invalidate();
     }
 
-    private void AdjustDatas(SQLProcesser prcssr){
-        /**
-         * Adjusting test data for custom listView
-         */
-        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-        View view = inflater.inflate(R.layout.dbdialog,(ListView)findViewById(R.id.List));
-        //make a new list of DBDatas
-        List<DBDatas> objects = new ArrayList<DBDatas>();
-        //make data u need for
-        objects = prcssr.showDatas(objects);
-
-        //Give an adapter for setting Views
-        DataAdapter dataAdapter = new DataAdapter(context,0,objects);
-        //set container ListView
-        ListView listView = (ListView)view.findViewById(R.id.List);
-        //set adapter which contains data u want.
-        listView.setAdapter(dataAdapter);
-
-        //make Dialog
-        new AlertDialog.Builder(MainActivity.this).setTitle("Data List")
-                .setView(view).setPositiveButton("Close",
-                new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which){
-                    }
-                }).show();
-
-    }
 
 /*
     @Override
