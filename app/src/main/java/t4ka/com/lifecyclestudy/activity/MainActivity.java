@@ -10,12 +10,17 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -37,14 +42,69 @@ public class MainActivity extends Activity implements OnClickListener{
      * in app/build.gradle
      */
 
+    private String[] myTitles;
+    private DrawerLayout drawerLayout;
+    private ListView drawerList;
+    private ActionBarDrawerToggle drawerToggle;
+
+    private CharSequence drawerTitle;
+    private CharSequence title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
+        title = getTitle();
+        drawerTitle = title;
+
+        //initialize drawer menu list
+        myTitles = new String[]{"aaaaa","bbbb","cccc","ddd"};
+
+        //get ID of DrawerLayout and ListView
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerList = (ListView)findViewById(R.id.left_drawer);
+
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
+        //string data and ListView
+        drawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_item,myTitles));
+
+        //Registering the Event of that item is chosen
+        drawerList.setOnItemClickListener(
+                new ListView.OnItemClickListener(){
+                    @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                        selectItem(position);
+                    }
+                }
+        );
+
+        //Setting actions when press homeButton
+        drawerToggle = new ActionBarDrawerToggle(
+                this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close
+        ) {
+            public void onDrawerClosed(View view){
+                //getActionBar().setTitle(title);
+            }
+            public void onDrawerOpened(View view){
+                //getActionBar().setTitle(drawerTitle);
+                invalidateOptionsMenu();
+            }
+        };
+
+        //Setting drawerToggle to the Listener of DrawerLayout
+        drawerLayout.setDrawerListener(drawerToggle);
+
         Button StartBtn = (Button)findViewById(R.id.StartBtn);
         StartBtn.setOnClickListener(this);
 
+    }
+
+    private void selectItem(int position){
+        drawerLayout.closeDrawer(drawerList);
+        //give which one is selected
+        Toast.makeText(this,myTitles[position] + "selected",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -97,7 +157,7 @@ public class MainActivity extends Activity implements OnClickListener{
     }
 
 
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -119,5 +179,5 @@ public class MainActivity extends Activity implements OnClickListener{
 
         return super.onOptionsItemSelected(item);
     }
-    */
+
 }
