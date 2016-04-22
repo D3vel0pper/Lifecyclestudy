@@ -26,7 +26,9 @@ public class DataAdapter extends ArrayAdapter<DBDatas> {
     @Override
     public View getView(int position,View convertView, ViewGroup parent){
         //get position's data
-        DBDatas item = getItem(position);
+//        DBDatas item = getItem(position);
+        //if you want to show newest one in the top position, use this logic
+        DBDatas item = getItem(getCount() - 1 - position);
         //make a single instance of convertView
         if(convertView == null){
             convertView = inflater.inflate(R.layout.db_list_items,null);
