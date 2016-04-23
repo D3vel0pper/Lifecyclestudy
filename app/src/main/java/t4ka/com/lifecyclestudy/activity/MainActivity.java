@@ -31,6 +31,7 @@ import t4ka.com.lifecyclestudy.commons.*;
 
 public class MainActivity extends Activity implements OnClickListener{
 
+    //
     private LinearLayout parent;
 
     @Override
