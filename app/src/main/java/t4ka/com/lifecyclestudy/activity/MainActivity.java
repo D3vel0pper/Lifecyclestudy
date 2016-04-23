@@ -26,14 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import t4ka.com.lifecyclestudy.R;
-import t4ka.com.lifecyclestudy.Service.MyIntentService;
-import t4ka.com.lifecyclestudy.adapter.*;
 import t4ka.com.lifecyclestudy.commons.*;
 
 
 public class MainActivity extends Activity implements OnClickListener{
 
-    private TextView counter;
     private LinearLayout parent;
 
     @Override
